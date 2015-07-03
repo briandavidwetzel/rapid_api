@@ -3,20 +3,20 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'restful_api/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "restful_api"
-  spec.version       = RestfulApi::VERSION
-  spec.authors       = ["briandavidwetzel"]
-  spec.email         = ["briandavidwetzel@gmail.com"]
-  spec.summary       = %q{REST actions for conventional APIs.}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+Gem::Specification.new do |gem|
+  gem.name          = "restful_api"
+  gem.version       = RestfulApi::VERSION
+  gem.authors       = ["briandavidwetzel"]
+  gem.email         = ["briandavidwetzel@gmail.com"]
+  gem.summary       = %q{REST actions for conventional APIs.}
+  gem.homepage      = ""
+  gem.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  gem.files         = Dir['README.md', 'LICENSE', 'lib/**/*', 'test/**/*']
+  gem.test_files    = Dir['test/**/*']
+  gem.require_paths = ["lib"]
+  gem.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.7"
-  spec.add_development_dependency "rake", "~> 10.0"
+  gem.add_development_dependency "bundler", "~> 1.7"
+  gem.add_development_dependency "rake", "~> 10.0"
 end
