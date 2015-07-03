@@ -4,13 +4,11 @@ module ActionController
 
   class RestActionsTest < ActionController::TestCase
 
-    RestActionsTest = Class.new(Model)
-
-    class RestActionsTestController < ActionController::Base
+    class BricksController < ActionController::Base
       include RestfulApi::ActionController::RestActions
     end
 
-    tests RestActionsTestController
+    tests BricksController
 
     def test_has_index_action
       assert 'index'.in?(@controller.action_methods), "Index action is not defined."
@@ -31,6 +29,7 @@ module ActionController
     def test_has_destroy_action
       assert 'destroy'.in?(@controller.action_methods), "Destroy action is not defined."
     end
+
   end
 
 end
