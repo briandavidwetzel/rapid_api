@@ -1,11 +1,18 @@
 module RestfulApi
   module ActionController
     module RestActions
-      include ActiveSupport::Concern
+      extend ActiveSupport::Concern
+
+      included do
+
+      end
 
       def index
         render json: {}, status: :ok
       end
+
+      private
+
 
     end
   end
