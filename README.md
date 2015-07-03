@@ -1,6 +1,6 @@
-# RestfulApi
+# restful_api
 
-TODO: Write a gem description
+Add RESTful actions to rails-api controllers.
 
 ## Installation
 
