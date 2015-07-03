@@ -15,8 +15,11 @@ Gem::Specification.new do |gem|
   gem.files         = Dir['README.md', 'LICENSE', 'lib/**/*', 'test/**/*']
   gem.test_files    = Dir['test/**/*']
   gem.require_paths = ["lib"]
-  gem.require_paths = ["lib"]
 
-  gem.add_development_dependency "bundler", "~> 1.7"
-  gem.add_development_dependency "rake", "~> 10.0"
+  gem.add_runtime_dependency     "actionpack", ">= 4.0"
+
+  gem.add_development_dependency "active_model_serializers", "~> 0.9"
+  gem.add_development_dependency "bundler",                  "~> 1.7"
+  gem.add_development_dependency "rails",                    ">= 4.0"
+  gem.add_development_dependency "rake",                     "~> 10.0"
 end
