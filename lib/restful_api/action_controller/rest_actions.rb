@@ -8,11 +8,24 @@ module RestfulApi
       end
 
       def index
-        render json: {}, status: :ok
+        render head :no_content
       end
 
-      private
+      def show
+        render head :no_content
+      end
 
+      def create
+        render head :no_content
+      end
+
+      def update
+        render head :no_content
+      end
+
+      def destroy
+        render head :no_content
+      end
 
     end
   end
