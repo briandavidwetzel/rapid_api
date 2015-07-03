@@ -4,6 +4,7 @@ module RestfulApi
   module ActionController
     module RestActions
       extend ActiveSupport::Concern
+      include PermittedParams
 
       included do
 

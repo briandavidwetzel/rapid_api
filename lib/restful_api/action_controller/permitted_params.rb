@@ -12,6 +12,13 @@ module RestfulApi
         self.class.permitted_params
       end
 
+      private
+
+      def _permitted_member_params(member_key)
+        params.require(member_key).permit(*permitted_params)
+      end
+
+
       module ClassMethods
 
         def permit_params(*params)

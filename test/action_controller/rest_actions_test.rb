@@ -30,6 +30,9 @@ module ActionController
       assert 'destroy'.in?(@controller.action_methods), "Destroy action is not defined."
     end
 
+    def test_has_permitted_params
+      
+    end
   end
 
 end
