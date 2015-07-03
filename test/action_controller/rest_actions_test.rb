@@ -30,9 +30,22 @@ module ActionController
       assert 'destroy'.in?(@controller.action_methods), "Destroy action is not defined."
     end
 
-    def test_has_permitted_params
-      
+    def test_member_class_name
+      assert_equal BricksController.member_class_name, "Brick"
     end
+
+    def test_member_model
+      assert_equal BricksController.member_model, Brick
+    end
+
+    def test_member_params_key
+      assert_equal BricksController.member_params_key, 'brick'
+    end
+
+    def test_collection_model
+      assert_equal BricksController.collection_model, Brick
+    end
+
   end
 
 end
