@@ -1,8 +1,10 @@
 require 'active_record'
-ActiveRecord::Base.establish_connection adapter: :nulldb, schema: 'schema.rb'
+require 'database_cleaner'
 
-NullDB.configure do |config|
-  config.project_root = './test/fixtures'
-end
+ActiveRecord::Base.establish_connection adapter:  :sqlite3,
+                                        database: 'memory'
 
+DatabaseCleaner.strategy = :transaction
+
+# == Models
 Brick = Class.new(ActiveRecord::Base)

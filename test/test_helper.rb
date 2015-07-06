@@ -21,5 +21,10 @@ end
 ActionController::TestCase.class_eval do
   def setup
     @routes = TestHelper::Routes
+    DatabaseCleaner.start
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 end

@@ -15,15 +15,19 @@ module RestfulApi
       end
 
       def show
-        render head :no_content
+        @member = _member_model.find params[_member_params_key][:id]
+        render json: @member, status: :ok
       end
 
       def create
-        render head :no_content
+        @member = _member_model.create _member_params
+        render json: @member, status: :created
       end
 
       def update
-        render head :no_content
+        @member = _member_model.find params[_member_params_key][:id]
+        @member.update_attributes _member_params
+        render json: @member, status: :ok
       end
 
       def destroy
@@ -37,7 +41,7 @@ module RestfulApi
       end
 
       def _member_model
-        self.class.member_model_class
+        self.class.member_model
       end
 
       def _collection_model

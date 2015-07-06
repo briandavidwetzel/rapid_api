@@ -6,6 +6,8 @@ module ActionController
 
     class BricksController < ActionController::Base
       include RestfulApi::ActionController::RestActions
+
+      permit_params :color, :weight, :material
     end
 
     tests BricksController
@@ -46,6 +48,26 @@ module ActionController
       assert_equal BricksController.collection_model, Brick
     end
 
+    def test_show_record
+      brick = Brick.create color: 'red'
+      get :show, {brick: {id: brick.id}}
+      assert_equal brick.to_json, response.body
+    end
+
+    def test_creates_record
+      pre_create_count  = Brick.count
+      post :create, {brick: {color: 'red', weight: 10, material: 'clay'}}
+      post_create_count = Brick.count
+      assert_equal pre_create_count, post_create_count - 1
+    end
+
+    def test_updates_record
+      brick = Brick.create color: 'red', weight: 1.0, material: 'clay'
+      post :update, {brick: {id: brick.id, color: 'yellow', weight: 10.0, material: 'gold'}}
+      brick.reload
+      assert_equal brick.color, 'yellow'
+      assert_equal brick.to_json, response.body
+    end
   end
 
 end
