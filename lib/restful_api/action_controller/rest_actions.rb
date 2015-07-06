@@ -15,7 +15,7 @@ module RestfulApi
       end
 
       def show
-        @member = _member_model.find params[_member_params_key][:id]
+        @member = _member_model.find params[:id]
         render json: @member, status: :ok
       end
 
@@ -25,13 +25,15 @@ module RestfulApi
       end
 
       def update
-        @member = _member_model.find params[_member_params_key][:id]
+        @member = _member_model.find params[:id]
         @member.update_attributes _member_params
         render json: @member, status: :ok
       end
 
       def destroy
-        render head :no_content
+        @member = _member_model.find params[:id]
+        @member.destroy
+        head :no_content
       end
 
       private

@@ -50,7 +50,7 @@ module ActionController
 
     def test_show_record
       brick = Brick.create color: 'red'
-      get :show, {brick: {id: brick.id}}
+      get :show, {id: brick.id}
       assert_equal brick.to_json, response.body
     end
 
@@ -63,10 +63,15 @@ module ActionController
 
     def test_updates_record
       brick = Brick.create color: 'red', weight: 1.0, material: 'clay'
-      post :update, {brick: {id: brick.id, color: 'yellow', weight: 10.0, material: 'gold'}}
+      post :update, {brick: {id: brick.id, color: 'yellow', weight: 10.0, material: 'gold'}, id: brick.id}
       brick.reload
-      assert_equal brick.color, 'yellow'
       assert_equal brick.to_json, response.body
+    end
+
+    def test_destroy_record
+      brick = Brick.create color: 'red', weight: 1.0, material: 'clay'
+      post :destroy, {id: brick.id}
+
     end
   end
 
