@@ -1,5 +1,6 @@
 require 'restful_api/version'
 require 'active_support/concern'
+require 'restful_api/model_adapters'
 require 'restful_api/action_controller/rest_actions'
 
 
