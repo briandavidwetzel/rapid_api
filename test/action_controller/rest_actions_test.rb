@@ -26,7 +26,7 @@ module ActionController
       assert_equal BricksController.member_params_key, 'brick'
     end
 
-    def test_show_record
+    def test_show
       BricksController.adapter_model = Minitest::Mock.new
       BricksController.adapter_model.expect :find, nil, ["1"]
       get :show, {id: 1}
@@ -34,7 +34,7 @@ module ActionController
       BricksController.adapter_model.verify
     end
 
-    def test_creates_record
+    def test_create
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapter_model = Minitest::Mock.new
       BricksController.adapter_model.expect :create, nil, [params]
@@ -43,7 +43,7 @@ module ActionController
       BricksController.adapter_model.verify
     end
 
-    def test_updates_record
+    def test_update
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapter_model = Minitest::Mock.new
       BricksController.adapter_model.expect :update, nil, ["1", params]
@@ -52,7 +52,7 @@ module ActionController
       BricksController.adapter_model.verify
     end
 
-    def test_destroy_record
+    def test_destroy
       BricksController.adapter_model = Minitest::Mock.new
       BricksController.adapter_model.expect :destroy, nil, ["1"]
       post :destroy, {id: 1}
