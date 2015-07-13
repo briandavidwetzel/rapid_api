@@ -3,5 +3,6 @@ module RestfulApi
     include Singleton
 
     attr_accessor :model_adapter, :serializer_adapter
+
   end
 end
