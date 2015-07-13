@@ -1,2 +1,1 @@
 Brick = Class.new()
-

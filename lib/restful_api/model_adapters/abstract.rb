@@ -1,4 +1,4 @@
-module ResfulApi
+module RestfulApi
   module ModelAdapters
     class Abstract
 

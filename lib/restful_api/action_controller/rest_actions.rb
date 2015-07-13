@@ -7,6 +7,8 @@ module RestfulApi
       include PermittedParams
 
       included do
+        self.serializer_adapter = RestfulApi.config.serializer_adapter
+        self.model_adapter      = RestfulApi.config.model_adapter
       end
 
       def index
@@ -16,17 +18,17 @@ module RestfulApi
 
       def show
         @member = _adapted_model.find params[:id]
-        render json: _serializer_adapter.serialize(@member) , status: :found
+        render json: _adapted_serializer.serialize(@member) , status: :found
       end
 
       def create
         @member = _adapted_model.create _member_params
-        render json: _serializer_adapter.serialize(@member), status: :created
+        render json: _adapted_serializer.serialize(@member), status: :created
       end
 
       def update
         @member = _adapted_model.update params[:id], _member_params
-        render json: _serializer_adapter.serialize(@member), status: :ok
+        render json: _adapted_serializer.serialize(@member), status: :ok
       end
 
       def destroy
@@ -40,8 +42,8 @@ module RestfulApi
         self.class.adapted_model
       end
 
-      def _serializer_adapter
-        self.class.serializer_adapter
+      def _adapted_serializer
+        self.class.adapted_serializer
       end
 
       def _member_params
@@ -63,7 +65,8 @@ module RestfulApi
                        :model_adapter,
                        :adapted_model,
                        :params_key,
-                       :serializer_adapter
+                       :serializer_adapter,
+                       :adapted_serializer
 
         def model_class_name
           @@model_class_name || controller_name.classify.singularize
@@ -78,8 +81,13 @@ module RestfulApi
         end
 
         def model_adapter=(adapter)
-          @@model_adapter = adapter
+          @@model_adapter    = adapter
           self.adapted_model = @@model_adapter.new(model)
+        end
+
+        def serializer_adapter=(adapter)
+          @@serializer_adapter    = adapter
+          self.adapted_serializer = @@serializer_adapter.new(model)
         end
 
       end

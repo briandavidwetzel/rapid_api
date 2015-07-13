@@ -8,7 +8,11 @@ module RestfulApi
         @model = model
       end
 
-      def serialize
+      def serialize(member)
+        raise NotImplementedError
+      end
+
+      def serialize_collection(collection)
         raise NotImplementedError
       end
 

@@ -1,4 +1,4 @@
-require File.expand_path '../../test_helper.rb', __FILE__
+require File.expand_path '../../../test_helper.rb', __FILE__
 
 module ActionController
 
@@ -12,7 +12,6 @@ module ActionController
       def permissive_bricks
         render json: _permitted_params_for(:brick).to_json, status: :ok
       end
-
     end
 
     tests BricksController
