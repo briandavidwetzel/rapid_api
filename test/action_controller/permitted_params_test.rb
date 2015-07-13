@@ -10,7 +10,7 @@ module ActionController
       permit_params :color
 
       def permissive_bricks
-        render json: _permitted_member_params(:brick).to_json, status: :ok
+        render json: _permitted_params_for(:brick).to_json, status: :ok
       end
 
     end
@@ -21,7 +21,7 @@ module ActionController
       assert :color.in?(@controller.permitted_params), "Attribute not added to permitted params."
     end
 
-    def test_permitted_member_params
+    def test_permitted_params_for
       post :permissive_bricks, {brick: {color: 'red', weight: 1}}
       refute response.body.include?("\"weight\":\"1.0\""), ":attribute should not have been permitted."
       assert response.body.include?("\"color\":\"red\""), ":attribute should have been permitted."

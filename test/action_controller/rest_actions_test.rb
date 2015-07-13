@@ -39,6 +39,7 @@ module ActionController
     end
 
     def test_serializer_adapter
+      BricksController.serializer_adapter = TestSerializerAdapter
       assert_equal TestSerializerAdapter, BricksController.serializer_adapter
     end
 
@@ -54,7 +55,7 @@ module ActionController
       BricksController.adapted_model = Minitest::Mock.new
       BricksController.adapted_model.expect :find, nil, ["1"]
       BricksController.serializer_adapter = Minitest::Mock.new
-      BricksController.serializer_adapter.expect :serialize, nil, []
+      BricksController.serializer_adapter.expect :serialize, nil, [nil]
       get :show, {id: 1}
       assert_response :found
       BricksController.adapted_model.verify
@@ -65,18 +66,24 @@ module ActionController
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       BricksController.adapted_model.expect :create, nil, [params]
+      BricksController.serializer_adapter = Minitest::Mock.new
+      BricksController.serializer_adapter.expect :serialize, nil, [nil]
       post :create, {brick: params}
       assert_response :created
       BricksController.adapted_model.verify
+      BricksController.serializer_adapter.verify
     end
 
     def test_update
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       BricksController.adapted_model.expect :update, nil, ["1", params]
+      BricksController.serializer_adapter = Minitest::Mock.new
+      BricksController.serializer_adapter.expect :serialize, nil, [nil]
       post :update, {brick: params, id: 1}
       assert_response :ok
       BricksController.adapted_model.verify
+      BricksController.serializer_adapter.verify
     end
 
     def test_destroy

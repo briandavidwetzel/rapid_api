@@ -16,17 +16,17 @@ module RestfulApi
 
       def show
         @member = _adapted_model.find params[:id]
-        render json: _serializer_adapter.serialize , status: :found
+        render json: _serializer_adapter.serialize(@member) , status: :found
       end
 
       def create
         @member = _adapted_model.create _member_params
-        render json: @member, status: :created
+        render json: _serializer_adapter.serialize(@member), status: :created
       end
 
       def update
         @member = _adapted_model.update params[:id], _member_params
-        render json: @member, status: :ok
+        render json: _serializer_adapter.serialize(@member), status: :ok
       end
 
       def destroy
@@ -45,7 +45,7 @@ module RestfulApi
       end
 
       def _member_params
-        _permitted_member_params(_params_key)
+        _permitted_params_for(_params_key)
       end
 
       def _model
