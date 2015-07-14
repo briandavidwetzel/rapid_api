@@ -3,23 +3,25 @@ module RestfulApi
     class ActiveRecordAdapter < Abstract
 
       def find(id)
-        raise NotImplementedError
+        klass.find id
       end
 
-      def find_all(params)
-        raise NotImplementedError
+      def find_all(params=nil)
+        klass.all
       end
 
       def create(params)
-        raise NotImplementedError
+        klass.create params
       end
 
       def update(id, params)
-        raise NotImplementedError
+        member = klass.find id
+        member.update_attributes params
+        member
       end
 
-      def destroy(params)
-        raise NotImplementedError
+      def destroy(id)
+        klass.destroy id
       end
 
     end

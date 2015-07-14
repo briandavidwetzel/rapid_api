@@ -12,7 +12,7 @@ module RestfulApi
         raise NotImplementedError
       end
 
-      def find_all(params)
+      def find_all(params=nil)
         raise NotImplementedError
       end
 
@@ -24,7 +24,7 @@ module RestfulApi
         raise NotImplementedError
       end
 
-      def destroy(params)
+      def destroy(id)
         raise NotImplementedError
       end
 
