@@ -2,10 +2,10 @@ module RestfulApi
   module SerializerAdapters
     class Abstract
 
-      attr_accessor :model
+      attr_accessor :klass
 
-      def initialize(model)
-        @model = model
+      def initialize(klass)
+        @klass = klass
       end
 
       def serialize(member)
