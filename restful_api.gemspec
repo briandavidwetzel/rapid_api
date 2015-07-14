@@ -16,7 +16,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = Dir['test/**/*']
   gem.require_paths = ['lib']
 
-  gem.add_runtime_dependency     'actionpack', '>= 4.0'
+  gem.add_runtime_dependency     'actionpack',               '>= 4.0'
+  gem.add_runtime_dependency     'active_model_serializers', '~> 0.9'
 
   gem.add_development_dependency 'bundler', '~> 1.7'
   gem.add_development_dependency 'rails',   '>= 4.0'

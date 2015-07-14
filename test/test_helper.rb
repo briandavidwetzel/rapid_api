@@ -6,7 +6,7 @@ require 'action_controller/test_case'
 require 'restful_api'
 require 'minitest/autorun'
 
-Dir['./test/fixtures/**/*.rb'].each {|f| require f}
+Dir['./test/support/**/*.rb'].each {|f| require f}
 
 module TestHelper
   Routes = ActionDispatch::Routing::RouteSet.new
