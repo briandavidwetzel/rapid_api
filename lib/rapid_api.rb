@@ -2,7 +2,7 @@ require 'rapid_api/version'
 require 'active_support/concern'
 require 'rapid_api/model_adapters'
 require 'rapid_api/serializer_adapters'
-require 'rapid_api/action_controller/rest_actions'
+require 'rapid_api/action_controller'
 require 'rapid_api/configuration'
 
 module RapidApi
@@ -17,3 +17,4 @@ module RapidApi
   end
 
 end
+ActionController::Base.send :include, RapidApi::ActionController::Macros
