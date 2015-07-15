@@ -1,6 +1,14 @@
 # rAPId
 A framework for rapid development of Rails APIs.
 
+```ruby
+class BricksController < ApplicationController
+  rapid_actions
+  
+  permit_params :color, :weight, :material
+end
+```
+
 ## Installation
 Include in your Gemfile:
 
