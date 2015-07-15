@@ -1,4 +1,4 @@
-require File.expand_path '../../../test_helper.rb', __FILE__
+require File.expand_path '../../../../test_helper.rb', __FILE__
 
 module RestfulApi
   module SerializerAdapters
@@ -19,7 +19,7 @@ module RestfulApi
       end
 
       def test_serialize_collection
-        DatabaseCleaner.clean
+        Brick.destroy_all
         brick1 = Brick.create color: 'yellow', weight: 10, material: 'gold'
         brick2 = Brick.create color: 'red',    weight: 1,  material: 'clay'
         serialized_brick_array = @adapter.serialize_collection Brick.all
