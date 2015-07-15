@@ -9,7 +9,7 @@ module RestfulApi
 
   Configuration.instance.tap do |c|
     c.model_adapter      = ModelAdapters::ActiveRecordAdapter
-    c.serializer_adapter = SerializerAdapters::Abstract
+    c.serializer_adapter = SerializerAdapters::AmsAdapter
   end
 
   def self.config

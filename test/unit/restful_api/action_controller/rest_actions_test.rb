@@ -46,9 +46,12 @@ module ActionController
     def test_index
       BricksController.adapted_model = Minitest::Mock.new
       BricksController.adapted_model.expect :find_all, nil, []
+      BricksController.adapted_serializer = Minitest::Mock.new
+      BricksController.adapted_serializer.expect :serialize_collection, nil, [nil]
       get :index
       assert_response :found
       BricksController.adapted_model.verify
+      BricksController.adapted_serializer.verify
     end
 
     def test_show

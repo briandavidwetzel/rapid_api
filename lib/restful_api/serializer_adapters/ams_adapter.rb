@@ -3,11 +3,15 @@ module RestfulApi
     class AmsAdapter < Abstract
 
       def serialize(member)
-        klass.new(member).to_json
+        serializer = klass.new(member)
+        serializer.to_json
       end
 
       def serialize_collection(collection)
-        ActiveModel::ArraySerializer.new(collection).to_json
+        array_serializer = ActiveModel::ArraySerializer.new collection, {
+                             each_serializer: klass
+                           }
+        array_serializer.serializable_array.to_json
       end
 
     end
