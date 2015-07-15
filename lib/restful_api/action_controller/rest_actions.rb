@@ -65,6 +65,7 @@ module RestfulApi
                        :model_adapter,
                        :adapted_model,
                        :params_key,
+                       :serializer,
                        :serializer_adapter,
                        :adapted_serializer
 
@@ -74,6 +75,10 @@ module RestfulApi
 
         def model
           @@model || model_class_name.constantize
+        end
+
+        def serializer
+          @@serializer || "#{model_class_name}Serializer".constantize
         end
 
         def params_key
@@ -87,7 +92,7 @@ module RestfulApi
 
         def serializer_adapter=(adapter)
           @@serializer_adapter    = adapter
-          self.adapted_serializer = @@serializer_adapter.new(model)
+          self.adapted_serializer = @@serializer_adapter.new(serializer)
         end
 
       end
