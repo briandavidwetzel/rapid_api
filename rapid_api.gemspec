@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = RapidApi::VERSION
   gem.authors       = ['briandavidwetzel']
   gem.email         = ['briandavidwetzel@gmail.com']
-  gem.summary       = %q{REST actions for conventional APIs.}
+  gem.summary       = %q{A framework for rapid development of Rails APIs.}
   gem.homepage      = ''
   gem.license       = 'MIT'
 
