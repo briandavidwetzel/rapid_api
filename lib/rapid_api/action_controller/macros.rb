@@ -4,7 +4,7 @@ module RapidApi
       extend ActiveSupport::Concern
 
       module ClassMethods
-        def rapid_actions(options)
+        def rapid_actions(options={})
           include RapidApi::ActionController::RestActions
           self.model              = options[:model]              if options[:model]
           self.serializer         = options[:serializer]         if options[:serializer]
