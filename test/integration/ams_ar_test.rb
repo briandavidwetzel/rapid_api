@@ -1,13 +1,13 @@
 require File.expand_path '../../test_helper.rb', __FILE__
 
 class AmsArTest < ActionController::TestCase
-    class BricksIntegrationController < ActionController::Base
+    class AmsArIntegrationController < ActionController::Base
       rapid_actions model: Brick, serializer: BrickSerializer
 
       permit_params :color, :weight, :material
     end
 
-    tests BricksIntegrationController
+    tests AmsArIntegrationController
 
     def setup
       super
