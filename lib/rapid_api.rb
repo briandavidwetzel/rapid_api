@@ -18,10 +18,10 @@ module RapidApi
 
 end
 
-if class_exists?(ActionController::Base)
+if defined?(ActionController::Base)
   ActionController::Base.send :include, RapidApi::ActionController::Macros
 end
 
-if class_exists?(ActionController::API)
+if defined?(ActionController::API)
   ActionController::API.send :include, RapidApi::ActionController::Macros
 end
