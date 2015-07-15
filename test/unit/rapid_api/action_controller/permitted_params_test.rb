@@ -5,7 +5,7 @@ module ActionController
   class PermittedParamsTest < ActionController::TestCase
 
     class BricksController < ActionController::Base
-      include RestfulApi::ActionController::PermittedParams
+      include RapidApi::ActionController::PermittedParams
 
       permit_params :color
 

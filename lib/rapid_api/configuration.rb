@@ -1,4 +1,4 @@
-module RestfulApi
+module RapidApi
   class Configuration
     include Singleton
 

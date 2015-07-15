@@ -3,7 +3,7 @@ require 'pry'
 require 'rails'
 require 'action_controller'
 require 'action_controller/test_case'
-require 'restful_api'
+require 'rapid_api'
 require 'minitest/autorun'
 
 Dir['./test/support/**/*.rb'].each {|f| require f}

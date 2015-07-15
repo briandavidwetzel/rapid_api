@@ -1,11 +1,11 @@
-require 'restful_api/version'
+require 'rapid_api/version'
 require 'active_support/concern'
-require 'restful_api/model_adapters'
-require 'restful_api/serializer_adapters'
-require 'restful_api/action_controller/rest_actions'
-require 'restful_api/configuration'
+require 'rapid_api/model_adapters'
+require 'rapid_api/serializer_adapters'
+require 'rapid_api/action_controller/rest_actions'
+require 'rapid_api/configuration'
 
-module RestfulApi
+module RapidApi
 
   Configuration.instance.tap do |c|
     c.model_adapter      = ModelAdapters::ActiveRecordAdapter

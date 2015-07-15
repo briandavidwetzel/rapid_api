@@ -1,12 +1,12 @@
 require File.expand_path '../../../../test_helper.rb', __FILE__
 
-module RestfulApi
+module RapidApi
   module ModelAdapters
     class ActiveRecordAdapterTest < Minitest::Test
 
       def setup
         DatabaseCleaner.start
-        @adapter = RestfulApi::ModelAdapters::ActiveRecordAdapter.new(Brick)
+        @adapter = RapidApi::ModelAdapters::ActiveRecordAdapter.new(Brick)
       end
 
       def teardown

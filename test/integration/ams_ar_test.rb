@@ -2,7 +2,7 @@ require File.expand_path '../../test_helper.rb', __FILE__
 
 class AmsArTest < ActionController::TestCase
     class BricksIntegrationController < ActionController::Base
-      include RestfulApi::ActionController::RestActions
+      include RapidApi::ActionController::RestActions
       self.model      = Brick
       self.serializer = BrickSerializer
 

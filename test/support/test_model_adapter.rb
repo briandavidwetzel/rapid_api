@@ -1,4 +1,4 @@
-class TestModelAdapter < RestfulApi::ModelAdapters::Abstract
+class TestModelAdapter < RapidApi::ModelAdapters::Abstract
 
     def find(params)
       return nil

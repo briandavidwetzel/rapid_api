@@ -1,4 +1,4 @@
-module RestfulApi
+module RapidApi
   module ActionController
 
     module PermittedParams

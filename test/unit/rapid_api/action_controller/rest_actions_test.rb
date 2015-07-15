@@ -5,7 +5,7 @@ module ActionController
   class RestActionsTest < ActionController::TestCase
 
     class BricksController < ActionController::Base
-      include RestfulApi::ActionController::RestActions
+      include RapidApi::ActionController::RestActions
 
       self.model_adapter      = TestModelAdapter
       self.serializer_adapter = TestSerializerAdapter

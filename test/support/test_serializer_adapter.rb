@@ -1,4 +1,4 @@
-class TestSerializerAdapter < RestfulApi::SerializerAdapters::Abstract
+class TestSerializerAdapter < RapidApi::SerializerAdapters::Abstract
   def serialize(member)
     return nil
   end

@@ -1,14 +1,14 @@
-require 'restful_api/action_controller/permitted_params'
+require 'rapid_api/action_controller/permitted_params'
 
-module RestfulApi
+module RapidApi
   module ActionController
     module RestActions
       extend ActiveSupport::Concern
       include PermittedParams
 
       included do
-        self.serializer_adapter = RestfulApi.config.serializer_adapter
-        self.model_adapter      = RestfulApi.config.model_adapter
+        self.serializer_adapter = RapidApi.config.serializer_adapter
+        self.model_adapter      = RapidApi.config.model_adapter
       end
 
       def index

@@ -1,11 +1,11 @@
 require File.expand_path '../../../../test_helper.rb', __FILE__
 
-module RestfulApi
+module RapidApi
   module SerializerAdapters
     class AmsAdapterTest < Minitest::Test
 
       def setup
-        @adapter = RestfulApi::SerializerAdapters::AmsAdapter.new(BrickSerializer)
+        @adapter = RapidApi::SerializerAdapters::AmsAdapter.new(BrickSerializer)
       end
 
       def test_klass

@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'restful_api/version'
+require 'rapid_api/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = 'restful_api'
-  gem.version       = RestfulApi::VERSION
+  gem.name          = 'rapid_api'
+  gem.version       = RapidApi::VERSION
   gem.authors       = ['briandavidwetzel']
   gem.email         = ['briandavidwetzel@gmail.com']
   gem.summary       = %q{REST actions for conventional APIs.}
