@@ -23,7 +23,7 @@ class AmsArTest < ActionController::TestCase
       brick1 = Brick.create color: 'yellow', weight: 10, material: 'gold'
       brick2 = Brick.create color: 'red',    weight: 1,  material: 'clay'
       get :index
-      assert_equal "[{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"},{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}]", response.body
+      assert_equal "{\"brick\":[{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"},{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}]}", response.body
     end
 
     def test_show

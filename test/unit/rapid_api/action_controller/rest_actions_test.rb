@@ -28,6 +28,7 @@ module ActionController
     end
 
     def test_params_key
+      BricksController.model = Brick
       assert_equal 'brick', BricksController.params_key
       BricksController.params_key = 'foo'
       assert_equal 'foo', BricksController.params_key

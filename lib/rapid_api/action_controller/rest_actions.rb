@@ -70,11 +70,11 @@ module RapidApi
                       :adapted_serializer
 
         def model_class_name
-          @model_class_name || controller_name.classify.singularize
+          @model_class_name ||= controller_name.classify.singularize
         end
 
         def model
-          @model || begin
+          @model ||= begin
                       model_class_name.constantize
                      rescue NameError
                      end
@@ -82,6 +82,7 @@ module RapidApi
 
         def model=(model)
           @model = model
+          _reset_params_key
           _initialize_model_adapter
           @model
         end
@@ -89,7 +90,7 @@ module RapidApi
         def serializer
           #TODO: BDW - This convention is too dependent on AMS. This should be
           # decoupled in some way.
-          @serializer ||  begin
+          @serializer ||=  begin
                              "#{model_class_name}Serializer".constantize
                            rescue NameError
                            end
@@ -102,7 +103,7 @@ module RapidApi
         end
 
         def params_key
-          @params_key || model_class_name.underscore
+          @params_key ||= model.to_s.underscore
         end
 
         def model_adapter=(adapter)
@@ -118,11 +119,15 @@ module RapidApi
         private
 
         def _initalize_serializer_adaper
-          self.adapted_serializer = @serializer_adapter.new(serializer)
+          self.adapted_serializer = @serializer_adapter.new(serializer, params_key)
         end
 
         def _initialize_model_adapter
           self.adapted_model = @model_adapter.new(model)
+        end
+
+        def _reset_params_key
+          @params_key = model.to_s.underscore
         end
       end
 
