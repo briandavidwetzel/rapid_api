@@ -50,7 +50,7 @@ module ActionController
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize_collection, nil, [nil]
       get :index
-      assert_response :found
+      assert_response :ok
       BricksController.adapted_model.verify
       BricksController.adapted_serializer.verify
     end
@@ -61,7 +61,7 @@ module ActionController
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, [nil]
       get :show, {id: 1}
-      assert_response :found
+      assert_response :ok
       BricksController.adapted_model.verify
       BricksController.adapted_serializer.verify
     end

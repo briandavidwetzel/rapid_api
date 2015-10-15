@@ -13,12 +13,12 @@ module RapidApi
 
       def index
         @collection = _adapted_model.find_all
-        render json: _adapted_serializer.serialize_collection(@collection), status: :found
+        render json: _adapted_serializer.serialize_collection(@collection), status: :ok
       end
 
       def show
         @member = _adapted_model.find params[:id]
-        render json: _adapted_serializer.serialize(@member) , status: :found
+        render json: _adapted_serializer.serialize(@member) , status: :ok
       end
 
       def create
