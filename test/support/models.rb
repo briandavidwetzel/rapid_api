@@ -7,3 +7,4 @@ ActiveRecord::Base.establish_connection adapter:  :sqlite3,
 DatabaseCleaner.strategy = :transaction
 
 Brick = Class.new(ActiveRecord::Base)
+User  = Class.new(ActiveRecord::Base)
