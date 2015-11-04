@@ -10,7 +10,7 @@ module RapidApi
         end
 
         def authenticate
-          
+          render json: {token: 'foo'}, status: :ok
         end
 
         protected
@@ -26,8 +26,12 @@ module RapidApi
         module ClassMethods
           attr_accessor :auth_params
 
+          def auth_params
+            @auth_params ||= []
+          end
+
           def authenticates_with(*params)
-            self.auth_params << *params
+            params.each { |p| self.auth_params << p }
           end
         end
       end

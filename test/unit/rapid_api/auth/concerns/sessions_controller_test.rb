@@ -23,6 +23,9 @@ class SessionsControllerTest < ActionController::TestCase
   def test_authenticate
     params = {'username' => 'bob_the_builder', 'password' => 'password'}
     post :authenticate, params
+    body = JSON.parse(@controller.response.body)
+    assert_response :ok
+    refute_equal body[:token], nil, "Authentication response body did not contain a token."
   end
 
 end
