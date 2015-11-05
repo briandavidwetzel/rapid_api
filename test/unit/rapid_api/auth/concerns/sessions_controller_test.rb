@@ -11,7 +11,7 @@ class SessionsControllerTest < ActionController::TestCase
 
     responds_with do |authenticated|
       {
-        token: 'foo',
+        token: jwt_encode({ secret: 'foo' }),
         user: {
           id:       authenticated.id,
           username: authenticated.username
@@ -38,7 +38,8 @@ class SessionsControllerTest < ActionController::TestCase
     post :authenticate, params
     body = JSON.parse(@controller.response.body)
     assert_response :ok
-    assert_equal body["token"], 'foo'
+    decoded_token = RapidApi::Auth::Support::JWT.decode(body["token"])
+    assert_equal decoded_token[0]['secret'], 'foo'
     assert_equal body["user"]["id"], @user.id
     assert_equal body["user"]["username"], @user.username
   end

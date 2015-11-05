@@ -4,6 +4,7 @@ module RapidApi
 
       module SessionsController
         extend ActiveSupport::Concern
+        include JWTHelpers
 
         included do
 
