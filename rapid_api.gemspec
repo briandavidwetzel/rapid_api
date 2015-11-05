@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
 
   gem.add_runtime_dependency     'actionpack', '>= 4.0'
+  gem.add_runtime_dependency     'jwt',        '~> 1.5'
 
   gem.add_development_dependency 'bundler',                  '~> 1.7'
   gem.add_development_dependency 'rails',                    '>= 4.0'
