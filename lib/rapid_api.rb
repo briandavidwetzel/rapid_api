@@ -3,6 +3,7 @@ require 'active_support/concern'
 require 'rapid_api/model_adapters'
 require 'rapid_api/serializer_adapters'
 require 'rapid_api/action_controller'
+require 'rapid_api/auth'
 require 'rapid_api/configuration'
 
 module RapidApi
