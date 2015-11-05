@@ -43,4 +43,12 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal body["user"]["username"], @user.username
   end
 
+  def test_invalid_credentials
+    params = {'username' => 'bob_the_builder', 'password' => 'wrong_password'}
+    post :authenticate, params
+    body = JSON.parse(@controller.response.body)
+    assert_response :unauthorized
+    assert_equal body["errors"].first, 'Invalid credentials'
+  end
+
 end

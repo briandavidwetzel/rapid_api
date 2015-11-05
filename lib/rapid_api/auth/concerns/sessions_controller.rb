@@ -15,7 +15,7 @@ module RapidApi
             render json:   self.class.auth_payload_proc.call(authenticated),
                    status: :ok
           else
-            #TODO
+            render json: { errors: ['Invalid credentials'] }, status: :unauthorized
           end
         end
 
@@ -23,10 +23,6 @@ module RapidApi
 
         def permitted_auth_params
           params.permit(*self.class.auth_params)
-        end
-
-        def auth_model
-          RapidApi.config.auth_model
         end
 
         module ClassMethods
