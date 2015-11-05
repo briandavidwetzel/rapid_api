@@ -9,7 +9,7 @@ class SessionsControllerTest < ActionController::TestCase
       User.where(username: params[:username], password: params[:password]).first
     end
 
-    auth_payload do |authenticated|
+    responds_with do |authenticated|
       {
         token: 'foo',
         user: {
