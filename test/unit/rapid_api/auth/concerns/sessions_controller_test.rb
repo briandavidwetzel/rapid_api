@@ -2,30 +2,45 @@ require File.expand_path '../../../../../test_helper.rb', __FILE__
 
 class SessionsControllerTest < ActionController::TestCase
 
-  class SessionsTestController < ActionController::Base
+  class TestSessionsController < ActionController::Base
     include RapidApi::Auth::Concerns::SessionsController
 
-    authenticates_with :username, :password
+    authenticates_with :username, :password do |params|
+      User.where(username: params[:username], password: params[:password]).first
+    end
+
+    auth_payload do |authenticated|
+      {
+        token: 'foo',
+        user: {
+          id:       authenticated.id,
+          username: authenticated.username
+        }
+      }
+    end
   end
 
-  tests SessionsTestController
+  tests TestSessionsController
 
   def setup
     super
     DatabaseCleaner.start
+
+    @user = User.create username: 'bob_the_builder', password: 'password'
   end
 
   def teardown
     DatabaseCleaner.clean
   end
 
-
   def test_authenticate
     params = {'username' => 'bob_the_builder', 'password' => 'password'}
     post :authenticate, params
     body = JSON.parse(@controller.response.body)
     assert_response :ok
-    refute_equal body[:token], nil, "Authentication response body did not contain a token."
+    assert_equal body["token"], 'foo'
+    assert_equal body["user"]["id"], @user.id
+    assert_equal body["user"]["username"], @user.username
   end
 
 end

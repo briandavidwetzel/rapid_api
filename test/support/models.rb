@@ -7,4 +7,10 @@ ActiveRecord::Base.establish_connection adapter:  :sqlite3,
 DatabaseCleaner.strategy = :transaction
 
 Brick = Class.new(ActiveRecord::Base)
-User  = Class.new(ActiveRecord::Base)
+
+class User < ActiveRecord::Base
+
+  def find_and_authenticate(params)
+    where(username: params[:username], password: params[:password]).first
+  end
+end
