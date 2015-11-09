@@ -11,6 +11,16 @@ module RapidApi
           self.model_adapter      = options[:model_adapter]      if options[:model_adapter]
           self.serializer_adapter = options[:serializer_adapter] if options[:serializer_adapter]
         end
+
+        def rapid_sessions_controller
+          include RapidApi::ActionController::Errors
+          include RapidApi::Auth::Concerns::SessionsController
+        end
+
+        def rapid_base_api_controller
+          include RapidApi::ActionController::Errors
+          include RapidApi::Auth::Concerns::AuthenticatedController
+        end
       end
 
     end
