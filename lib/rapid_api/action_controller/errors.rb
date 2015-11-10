@@ -15,18 +15,23 @@ module RapidApi
         raise NotAuthenticatedError
       end
 
-      def render_error_message(message, status)
+      protected
+
+      def render_error_message(message, status, e)
         render json: { errors: [message] }, status: status
       end
 
-      protected
-
-      def _not_authenticated
-        render_error_message 'Not Authenticated', :unauthorized
+      def log_error(e)
+        puts e.message
+        e.backtrace.map { |m| puts m }
       end
 
-      def _server_error
-        render_error_message 'Server Error', :internal_server_error
+      def _not_authenticated(e)
+        render_error_message 'Not Authenticated', :unauthorized, e
+      end
+
+      def _server_error(e)
+        render_error_message 'Server Error', :internal_server_error, e
       end
 
       module ClassMethods
