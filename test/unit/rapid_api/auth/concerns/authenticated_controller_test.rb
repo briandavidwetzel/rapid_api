@@ -21,6 +21,8 @@ class AuthenticatedControllerTest < ActionController::TestCase
     end
   end
 
+  TestChildAuthenticatedController = Class.new TestAuthenticatedController
+
   tests TestAuthenticatedController
 
   def setup
@@ -45,6 +47,10 @@ class AuthenticatedControllerTest < ActionController::TestCase
     User.delete_all
     get :index
     assert_response :unauthorized
+  end
+
+  def test_child_controller
+    assert_equal TestAuthenticatedController.authenticate_proc, TestChildAuthenticatedController.authenticate_proc
   end
 
 end

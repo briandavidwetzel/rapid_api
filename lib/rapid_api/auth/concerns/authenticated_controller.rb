@@ -27,6 +27,10 @@ module RapidApi
             self.authenticate_proc = Proc.new { |request| block.call(request) }
           end
 
+          def inherited(child)
+            child.authenticate_proc = authenticate_proc
+          end
+
         end
 
         module AuthenticationHelpers
