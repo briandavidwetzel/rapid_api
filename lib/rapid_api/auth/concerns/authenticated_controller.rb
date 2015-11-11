@@ -35,8 +35,7 @@ module RapidApi
 
         module AuthenticationHelpers
 
-          def jwt_token
-            token = request.headers.env['Authorization']
+          def decode_jwt_token!(token)
             begin
               jwt_decode(token)
             rescue JWT::ExpiredSignature

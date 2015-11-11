@@ -11,7 +11,7 @@ class AuthenticatedControllerTest < ActionController::TestCase
     permit_params :color, :weight, :material
 
     authenticate do |controller|
-      token = controller.jwt_token
+      token = controller.decode_jwt_token!(controller.request.headers.env['Authorization'])
       user_id = token[0].try :[], 'user_id'
       if user_id.present?
         User.find user_id
