@@ -17,7 +17,7 @@ module RapidApi
           include RapidApi::Auth::Concerns::SessionsController
         end
 
-        def rapid_base_api_controller
+        def rapid_base_controller
           include RapidApi::ActionController::Errors
           include RapidApi::Auth::Concerns::AuthenticatedController
         end
