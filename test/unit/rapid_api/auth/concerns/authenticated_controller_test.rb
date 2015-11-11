@@ -37,7 +37,7 @@ class AuthenticatedControllerTest < ActionController::TestCase
   def test_authenticated
     @user = User.create
     token = RapidApi::Auth::Support::JWT.encode({ user_id: @user.id })
-    @request.env['AUTH_TOKEN'] = token
+    @request.env['Authorization'] = token
     get :index
     assert_response :ok
     assert_equal @controller.authenticated.id, @user.id
