@@ -2,6 +2,8 @@ require File.expand_path '../../test_helper.rb', __FILE__
 
 class AmsArTest < ActionController::TestCase
   class AmsArIntegrationController < ActionController::Base
+    include RapidApi::ActionController::Errors
+
     rapid_actions model: Brick, serializer: BrickSerializer
 
     permit_params :color, :weight, :material

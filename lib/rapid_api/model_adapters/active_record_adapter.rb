@@ -3,7 +3,7 @@ module RapidApi
     class ActiveRecordAdapter < Abstract
 
       def find(id)
-        member = klass.find id
+        member = klass.where(id: id).first
         QueryResult.new data: member
       end
 

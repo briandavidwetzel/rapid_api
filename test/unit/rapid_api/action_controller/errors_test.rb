@@ -20,7 +20,7 @@ class ActionControllerErrorsTest < ActionController::TestCase
     end
 
     def server_error_action
-      raise "server error"
+      raise "server error message"
     end
 
   end
@@ -36,7 +36,7 @@ class ActionControllerErrorsTest < ActionController::TestCase
   def test_server_error
     get :server_error_action
     assert_response :internal_server_error
-    assert_equal ['Server Error'], JSON.parse(@controller.response.body)['errors']
+    assert_equal ['Server Error: server error message'], JSON.parse(@controller.response.body)['errors']
   end
 
   def test_not_found_error

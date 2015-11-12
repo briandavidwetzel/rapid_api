@@ -59,7 +59,7 @@ module RapidApi
       end
 
       def _server_error(e)
-        render_error_message 'Server Error', :internal_server_error, e
+        render_error_message "Server Error: #{e.message}", :internal_server_error, e
       end
 
       module ClassMethods

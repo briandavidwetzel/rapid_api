@@ -12,6 +12,10 @@ module RapidApi
       def has_errors?
         errors.present?
       end
+
+      def found?
+        data.present?
+      end
     end
 
   end
