@@ -24,7 +24,8 @@ module RapidApi
       end
 
       def destroy(id)
-        member = klass.destroy id
+        member = klass.find id
+        member.destroy
         _query_result_for_member member
       end
 

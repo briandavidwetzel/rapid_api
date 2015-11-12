@@ -38,6 +38,13 @@ module RapidApi
         refute_equal nil,    query_result.data.id
       end
 
+      def test_create_errors
+        params = {color: 'red', weight: 1, material: 'clay'}
+        @adapter.create params
+        query_result = @adapter.create params
+        assert_equal true, query_result.has_errors?
+      end
+
       def test_update
         params        = {color: 'red',    weight: 1,  material: 'clay'}
         update_params = {color: 'yellow', weight: 10, material: 'gold'}
@@ -49,11 +56,27 @@ module RapidApi
         assert_equal brick.id, query_result.data.id
       end
 
+      def test_update_errors
+        params        = {color: 'red',    weight: 1,  material: 'clay'}
+        update_params = {color: 'yellow', weight: 10, material: 'gold'}
+        brick         = Brick.create params
+        Brick.create update_params
+        query_result = @adapter.update(brick.id, update_params)
+        assert_equal true, query_result.has_errors?
+      end
+
       def test_destroy
         params = {color: 'red',    weight: 1,  material: 'clay'}
         brick  = Brick.create params
         @adapter.destroy brick.id
         assert Brick.where(id: brick.id).empty?
+      end
+
+      def test_destroy_errors
+        params = {color: 'prevent_destroy', weight: 1,  material: 'clay'}
+        brick  = Brick.create params
+        query_result = @adapter.destroy brick.id
+        assert_equal true, query_result.has_errors?
       end
     end
   end
