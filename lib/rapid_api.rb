@@ -11,6 +11,14 @@ module RapidApi
   Configuration.instance.tap do |c|
     c.model_adapter      = ModelAdapters::ActiveRecordAdapter
     c.serializer_adapter = SerializerAdapters::AmsAdapter
+    c.response_codes = {
+      :ok                    => :ok,
+      :created               => :created,
+      :not_found             => :not_found,
+      :unprocessable_entity  => :unprocessable_entity,
+      :unauthorized          => :unauthorized,
+      :internal_server_error => :internal_server_error
+    }
   end
 
   def self.config

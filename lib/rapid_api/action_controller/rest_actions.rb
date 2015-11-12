@@ -5,6 +5,7 @@ module RapidApi
     module RestActions
       extend ActiveSupport::Concern
       include PermittedParams
+      include Errors
 
       included do
         self.serializer_adapter = RapidApi.config.serializer_adapter
@@ -13,13 +14,13 @@ module RapidApi
 
       def index
         query_result = _adapted_model.find_all
-        render json: _adapted_serializer.serialize_collection(query_result.data), status: :ok
+        render json: _adapted_serializer.serialize_collection(query_result.data), status: response_code_for(:ok)
       end
 
       def show
         query_result = _adapted_model.find params[:id]
         if query_result.found?
-          render json: _adapted_serializer.serialize(query_result.data) , status: :ok
+          render json: _adapted_serializer.serialize(query_result.data) , status: response_code_for(:ok)
         else
           not_found!
         end
@@ -30,7 +31,7 @@ module RapidApi
         if query_result.has_errors?
           not_processable! query_result.errors
         else
-          render json: _adapted_serializer.serialize(query_result.data), status: :created
+          render json: _adapted_serializer.serialize(query_result.data), status: response_code_for(:created)
         end
       end
 
@@ -40,7 +41,7 @@ module RapidApi
           if query_result.has_errors?
             not_processable! query_result.errors
           else
-            render json: _adapted_serializer.serialize(query_result.data), status: :ok
+            render json: _adapted_serializer.serialize(query_result.data), status: response_code_for(:ok)
           end
         else
           not_found!

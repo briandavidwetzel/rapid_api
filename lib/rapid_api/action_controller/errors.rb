@@ -38,7 +38,11 @@ module RapidApi
       protected
 
       def render_error_message(message, status, e)
-        render json: { errors: [message] }, status: status
+        render json: { errors: [message] }, status: response_code_for(status)
+      end
+
+      def response_code_for(status)
+        RapidApi.config.response_codes[status]
       end
 
       def log_error(e)
@@ -55,7 +59,7 @@ module RapidApi
       end
 
       def _not_processable(e)
-        render json: { errors: e.errors }, status: :unprocessable_entity
+        render json: { errors: e.errors }, status: response_code_for(:unprocessable_entity)
       end
 
       def _server_error(e)
