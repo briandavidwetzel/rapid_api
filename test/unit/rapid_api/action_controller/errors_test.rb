@@ -9,6 +9,10 @@ class ActionControllerErrorsTest < ActionController::TestCase
       not_authenticated!
     end
 
+    def not_found_action
+      not_found!
+    end
+
     def server_error_action
       raise "server error"
     end
@@ -27,5 +31,11 @@ class ActionControllerErrorsTest < ActionController::TestCase
     get :server_error_action
     assert_response :internal_server_error
     assert_equal ['Server Error'], JSON.parse(@controller.response.body)['errors']
+  end
+
+  def test_server_error
+    get :not_found_action
+    assert_response :not_found
+    assert_equal ['Not Found'], JSON.parse(@controller.response.body)['errors']
   end
 end
