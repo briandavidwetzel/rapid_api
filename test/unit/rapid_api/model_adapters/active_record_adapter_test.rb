@@ -19,32 +19,34 @@ module RapidApi
 
       def test_find
         brick = Brick.create color: 'red'
-        assert_equal @adapter.find(brick.id), brick
+        query_result = @adapter.find(brick.id)
+        assert_equal query_result.data, brick
       end
 
       def test_find_all
         bricks = Brick.all
-        assert_equal @adapter.find_all, bricks
+        query_result = @adapter.find_all
+        assert_equal query_result.data, bricks
       end
 
       def test_create
         params = {color: 'red', weight: 1, material: 'clay'}
-        brick = @adapter.create params
-        assert_equal 'red',  brick.color
-        assert_equal 1,      brick.weight
-        assert_equal 'clay', brick.material
-        refute_equal nil,    brick.id
+        query_result = @adapter.create params
+        assert_equal 'red',  query_result.data.color
+        assert_equal 1,      query_result.data.weight
+        assert_equal 'clay', query_result.data.material
+        refute_equal nil,    query_result.data.id
       end
 
       def test_update
         params        = {color: 'red',    weight: 1,  material: 'clay'}
         update_params = {color: 'yellow', weight: 10, material: 'gold'}
         brick         = Brick.create params
-        updated_brick = @adapter.update(brick.id, update_params)
-        assert_equal 'yellow', updated_brick.color
-        assert_equal 10,       updated_brick.weight
-        assert_equal 'gold',   updated_brick.material
-        assert_equal brick.id, updated_brick.id
+        query_result = @adapter.update(brick.id, update_params)
+        assert_equal 'yellow', query_result.data.color
+        assert_equal 10,       query_result.data.weight
+        assert_equal 'gold',   query_result.data.material
+        assert_equal brick.id, query_result.data.id
       end
 
       def test_destroy

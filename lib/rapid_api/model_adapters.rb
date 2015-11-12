@@ -1,4 +1,5 @@
 require 'rapid_api/model_adapters/abstract'
+require 'rapid_api/model_adapters/query_result'
 require 'rapid_api/model_adapters/active_record_adapter'
 
 module RapidApi
