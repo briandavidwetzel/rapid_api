@@ -12,28 +12,48 @@ module RapidApi
       end
 
       def index
-        @collection = _adapted_model.find_all
-        render json: _adapted_serializer.serialize_collection(@collection), status: :ok
+        query_result = _adapted_model.find_all
+        render json: _adapted_serializer.serialize_collection(query_result.data), status: :ok
       end
 
       def show
-        @member = _adapted_model.find params[:id]
-        render json: _adapted_serializer.serialize(@member) , status: :ok
+        query_result = _adapted_model.find params[:id]
+        if query_result.found?
+          render json: _adapted_serializer.serialize(query_result.data) , status: :ok
+        else
+          not_found!
+        end
       end
 
       def create
-        @member = _adapted_model.create _member_params
-        render json: _adapted_serializer.serialize(@member), status: :created
+        query_result = _adapted_model.create _member_params
+        if query_result.has_errors?
+          not_processable! query_result.errors
+        else
+          render json: _adapted_serializer.serialize(query_result.data), status: :created
+        end
       end
 
       def update
-        @member = _adapted_model.update params[:id], _member_params
-        render json: _adapted_serializer.serialize(@member), status: :ok
+        query_result = _adapted_model.update params[:id], _member_params
+        if query_result.found?
+          if query_result.has_errors?
+            not_processable! query_result.errors
+          else
+            render json: _adapted_serializer.serialize(query_result.data), status: :ok
+          end
+        else
+          not_found!
+        end
       end
 
       def destroy
-        @member = _adapted_model.destroy params[:id]
-        head :no_content
+        query_result = _adapted_model.destroy params[:id]
+        if query_result.has_errors?
+          not_processable! query_result.errors
+        else
+          head :no_content
+        end
       end
 
       private

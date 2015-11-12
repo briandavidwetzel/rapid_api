@@ -6,7 +6,14 @@ ActiveRecord::Base.establish_connection adapter:  :sqlite3,
 
 DatabaseCleaner.strategy = :transaction
 
-Brick = Class.new(ActiveRecord::Base)
+class Brick < ActiveRecord::Base
+  validates_uniqueness_of :color
+  before_destroy :prevent_destroy
+
+  def prevent_destroy
+    errors.add(:base, "Destroy prevented") if color == 'prevent_destroy'
+  end
+end
 
 class User < ActiveRecord::Base
   def find_and_authenticate(params)
