@@ -23,6 +23,10 @@ env:
   - "RAILS_VERSION=4.2"
   - "RAILS_VERSION=master"
 
+addons:
+  code_climate:
+    repo_token: 059801d3b65779b50b46b2e58b4f683339615ec1e428f03acec04b21954ad365
+
 matrix:
   allow_failures:
     - rvm: ruby-head
