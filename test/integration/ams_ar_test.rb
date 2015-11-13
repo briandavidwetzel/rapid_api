@@ -14,6 +14,7 @@ class AmsArTest < ActionController::TestCase
   def setup
     super
     DatabaseCleaner.start
+    Brick.delete_all
   end
 
   def teardown

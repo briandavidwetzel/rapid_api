@@ -6,12 +6,10 @@ cache:
   bundler: true
 
 rvm:
-  # - 1.9.3
-  # - 2.0.0
+  - 2.0.0
   - 2.1
   - 2.2
   - ruby-head
-  # - rbx-2
 
 install:
   - bundle install --retry=3
@@ -20,15 +18,12 @@ script:
   - bundle exec rake
 
 env:
-  # - "RAILS_VERSION=4.0"
+  - "RAILS_VERSION=4.0"
   - "RAILS_VERSION=4.1"
   - "RAILS_VERSION=4.2"
   - "RAILS_VERSION=master"
 
 matrix:
-  include:
-  # - rvm: jruby-19mode
-  #   env: JRUBY_OPTS='--server -Xcompile.invokedynamic=false -Xcli.debug=true --debug'
   allow_failures:
     - rvm: ruby-head
     - env: "RAILS_VERSION=master"
