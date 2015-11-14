@@ -1,22 +1,22 @@
 class TestModelAdapter < RapidApi::ModelAdapters::Abstract
 
-    def find(params)
+    def find(params, scope)
       return nil
     end
 
-    def find_all(params)
+    def find_all(params, scope)
       return nil
     end
 
-    def create(params)
+    def create(params, scope)
       return nil
     end
 
-    def update(params)
+    def update(params, scope)
       return nil
     end
 
-    def destroy(params)
+    def destroy(params, scope)
       return nil
     end
 

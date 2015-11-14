@@ -1,11 +1,11 @@
-require 'rapid_api/action_controller/permitted_params'
-
 module RapidApi
   module ActionController
+
     module RestActions
       extend ActiveSupport::Concern
       include PermittedParams
       include Errors
+      include Scope
 
       included do
         self.serializer_adapter = RapidApi.config.serializer_adapter
@@ -13,12 +13,12 @@ module RapidApi
       end
 
       def index
-        query_result = _adapted_model.find_all
+        query_result = _adapted_model.find_all nil, scope 
         render json: _adapted_serializer.serialize_collection(query_result.data), status: response_code_for(:ok)
       end
 
       def show
-        query_result = _adapted_model.find params[:id]
+        query_result = _adapted_model.find params[:id], scope
         if query_result.found?
           render json: _adapted_serializer.serialize(query_result.data) , status: response_code_for(:ok)
         else
@@ -27,7 +27,7 @@ module RapidApi
       end
 
       def create
-        query_result = _adapted_model.create _member_params
+        query_result = _adapted_model.create _member_params, scope
         if query_result.has_errors?
           not_processable! query_result.errors
         else
@@ -36,7 +36,7 @@ module RapidApi
       end
 
       def update
-        query_result = _adapted_model.update params[:id], _member_params
+        query_result = _adapted_model.update params[:id], _member_params, scope
         if query_result.found?
           if query_result.has_errors?
             not_processable! query_result.errors
@@ -49,7 +49,7 @@ module RapidApi
       end
 
       def destroy
-        query_result = _adapted_model.destroy params[:id]
+        query_result = _adapted_model.destroy params[:id], scope
         if query_result.has_errors?
           not_processable! query_result.errors
         else
@@ -151,7 +151,7 @@ module RapidApi
           @params_key = model.to_s.underscore
         end
       end
-
     end
+
   end
 end
