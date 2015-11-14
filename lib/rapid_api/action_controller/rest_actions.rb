@@ -4,6 +4,7 @@ module RapidApi
     module RestActions
       extend ActiveSupport::Concern
       include PermittedParams
+      include FilterableParams
       include Errors
       include Scope
 
@@ -13,7 +14,7 @@ module RapidApi
       end
 
       def index
-        query_result = _adapted_model.find_all nil, scope
+        query_result = _adapted_model.find_all filterable_params, scope
         render json: _adapted_serializer.serialize_collection(query_result.data), status: response_code_for(:ok)
       end
 

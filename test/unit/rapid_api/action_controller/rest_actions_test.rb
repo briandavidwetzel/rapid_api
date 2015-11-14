@@ -10,7 +10,8 @@ module ActionController
       self.model_adapter      = TestModelAdapter
       self.serializer_adapter = TestSerializerAdapter
 
-      permit_params :color, :weight, :material
+      permit_params     :color, :weight, :material
+      filterable_params :color
 
       scope_by :color do |controller|
         'blue'
@@ -51,10 +52,10 @@ module ActionController
     def test_index
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data')
-      BricksController.adapted_model.expect :find_all, query_result, [nil, {color: 'blue'}]
+      BricksController.adapted_model.expect :find_all, query_result, [{'color' => 'green'}, {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize_collection, nil, ['data']
-      get :index
+      get :index, {color: 'green', material: 'leaves'}
       assert_response :ok
       BricksController.adapted_model.verify
       BricksController.adapted_serializer.verify
