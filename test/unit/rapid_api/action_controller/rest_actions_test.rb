@@ -6,12 +6,16 @@ module ActionController
 
     class BricksController < ActionController::Base
       include RapidApi::ActionController::RestActions
-      include RapidApi::ActionController::Errors
 
       self.model_adapter      = TestModelAdapter
       self.serializer_adapter = TestSerializerAdapter
 
-      permit_params :color, :weight, :material
+      permit_params     :color, :weight, :material
+      filterable_params :color
+
+      scope_by :color do |controller|
+        'blue'
+      end
     end
 
     Foo = Class.new(Brick)
@@ -48,10 +52,10 @@ module ActionController
     def test_index
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data')
-      BricksController.adapted_model.expect :find_all, query_result, []
+      BricksController.adapted_model.expect :find_all, query_result, [{'color' => 'green'}, {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize_collection, nil, ['data']
-      get :index
+      get :index, {color: 'green', material: 'leaves'}
       assert_response :ok
       BricksController.adapted_model.verify
       BricksController.adapted_serializer.verify
@@ -60,7 +64,7 @@ module ActionController
     def test_show
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data')
-      BricksController.adapted_model.expect :find, query_result, ["1"]
+      BricksController.adapted_model.expect :find, query_result, ["1", {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, ['data']
       get :show, {id: 1}
@@ -72,7 +76,7 @@ module ActionController
     def test_show_not_found
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new()
-      BricksController.adapted_model.expect :find, query_result, ["1"]
+      BricksController.adapted_model.expect :find, query_result, ["1", {color: 'blue'}]
       get :show, {id: 1}
       assert_response :not_found
       BricksController.adapted_model.verify
@@ -82,7 +86,7 @@ module ActionController
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data')
-      BricksController.adapted_model.expect :create, query_result, [params]
+      BricksController.adapted_model.expect :create, query_result, [params, {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, ['data']
       post :create, {brick: params}
@@ -95,7 +99,7 @@ module ActionController
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data', errors: 'dummy error')
-      BricksController.adapted_model.expect :create, query_result, [params]
+      BricksController.adapted_model.expect :create, query_result, [params, {color: 'blue'}]
       post :create, {brick: params}
       assert_response :unprocessable_entity
       assert_equal 'dummy error', JSON.parse(@controller.response.body)['errors']
@@ -105,7 +109,7 @@ module ActionController
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data')
-      BricksController.adapted_model.expect :update, query_result, ["1", params]
+      BricksController.adapted_model.expect :update, query_result, ["1", params, {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, ['data']
       post :update, {brick: params, id: 1}
@@ -118,7 +122,7 @@ module ActionController
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new()
-      BricksController.adapted_model.expect :update, query_result, ["1", params]
+      BricksController.adapted_model.expect :update, query_result, ["1", params, {color: 'blue'}]
       post :update, {brick: params, id: 1}
       assert_response :not_found
       BricksController.adapted_model.verify
@@ -128,7 +132,7 @@ module ActionController
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data', errors: 'dummy error')
-      BricksController.adapted_model.expect :update, query_result, ["1", params]
+      BricksController.adapted_model.expect :update, query_result, ["1", params, {color: 'blue'}]
       post :update, {brick: params, id: 1}
       assert_response :unprocessable_entity
       BricksController.adapted_model.verify
@@ -137,7 +141,7 @@ module ActionController
     def test_destroy
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new()
-      BricksController.adapted_model.expect :destroy, query_result, ["1"]
+      BricksController.adapted_model.expect :destroy, query_result, ["1", {color: 'blue'}]
       post :destroy, {id: 1}
       assert_response :no_content
       BricksController.adapted_model.verify
@@ -146,7 +150,7 @@ module ActionController
     def test_destroy_errors
       BricksController.adapted_model = Minitest::Mock.new
       query_result = RapidApi::ModelAdapters::QueryResult.new(errors: 'dummy error')
-      BricksController.adapted_model.expect :destroy, query_result, ["1"]
+      BricksController.adapted_model.expect :destroy, query_result, ["1", {color: 'blue'}]
       post :destroy, {id: 1}
       assert_response :unprocessable_entity
       BricksController.adapted_model.verify
