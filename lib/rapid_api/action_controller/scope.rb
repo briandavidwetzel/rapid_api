@@ -17,6 +17,7 @@ module RapidApi
       protected
 
       def define_scope
+        return unless self.class.scope_by_proc.present?
         scope_by = self.class.scope_by_proc.call(self)
         scope_by_array = [*scope_by]
         self.class.scope_params.each_with_index do |key, index|

@@ -78,6 +78,14 @@ module RapidApi
         query_result = @adapter.destroy brick.id
         assert_equal true, query_result.has_errors?
       end
+
+      def test_find_with_scope
+        brick = Brick.create color: 'magenta'
+        query_result = @adapter.find(brick.id, {color: 'orange'})
+        assert_equal nil, query_result.data
+        query_result = @adapter.find(brick.id, {color: 'magenta'})
+        assert_equal brick, query_result.data
+      end
     end
   end
 end
