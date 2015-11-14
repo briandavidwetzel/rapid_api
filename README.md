@@ -2,8 +2,6 @@
 
 A framework for rapid development of Rails APIs.
 
----
-
 ## Installation
 Include in your Gemfile:
 

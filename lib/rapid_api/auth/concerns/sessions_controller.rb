@@ -35,7 +35,7 @@ module RapidApi
 
           def authenticates_with(*params, &block)
             self.auth_proc = Proc.new { |params| block.call(params) }
-            params.each { |p| self.auth_params << p }
+            [*params].each { |p| self.auth_params << p }
           end
 
           def responds_with(&block)
