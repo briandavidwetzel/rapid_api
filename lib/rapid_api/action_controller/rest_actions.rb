@@ -13,7 +13,7 @@ module RapidApi
       end
 
       def index
-        query_result = _adapted_model.find_all nil, scope 
+        query_result = _adapted_model.find_all nil, scope
         render json: _adapted_serializer.serialize_collection(query_result.data), status: response_code_for(:ok)
       end
 
