@@ -8,12 +8,17 @@ module RapidApi
       end
 
       def find_all(params=nil, scope=nil)
-        collection = klass.all
+        params ||= {}
+        scope  ||= {}
+        scoped_params = params.merge scope
+        collection = klass.where(scoped_params)
         QueryResult.new data: collection
       end
 
       def create(params, scope=nil)
-        member = klass.create params
+        scope ||= {}
+        create_params = params.merge scope
+        member = klass.create create_params
         _query_result_for_member member
       end
 
