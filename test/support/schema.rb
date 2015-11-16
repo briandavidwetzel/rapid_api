@@ -5,6 +5,7 @@ ActiveRecord::Schema.define do
     t.string  :color
     t.decimal :weight
     t.string  :material
+    t.integer :user_id
   end
   create_table :users do |t|
     t.string :username

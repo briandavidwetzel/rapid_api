@@ -6,6 +6,10 @@ class AmsArTest < ActionController::TestCase
 
     rapid_actions model: Brick, serializer: BrickSerializer
 
+    scope_by :user_id do |controller|
+      controller.params['user_id']
+    end
+
     permit_params :color, :weight, :material
   end
 
@@ -15,6 +19,8 @@ class AmsArTest < ActionController::TestCase
     super
     DatabaseCleaner.start
     Brick.delete_all
+    @user1 = User.create
+    @user2 = User.create
   end
 
   def teardown
@@ -23,9 +29,10 @@ class AmsArTest < ActionController::TestCase
 
   def test_index
     Brick.destroy_all
-    brick1 = Brick.create color: 'yellow', weight: 10, material: 'gold'
-    brick2 = Brick.create color: 'red',    weight: 1,  material: 'clay'
-    get :index
+    brick1 = @user1.bricks.create color: 'yellow',  weight: 10, material: 'gold'
+    brick2 = @user1.bricks.create color: 'red',     weight: 1,  material: 'clay'
+    brick3 = @user2.bricks.create color: 'magenta', weight: 0,  material: 'feathers'
+    get :index, { user_id: @user1.id }
     assert_equal "{\"bricks\":[{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"},{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}]}", response.body
   end
 
