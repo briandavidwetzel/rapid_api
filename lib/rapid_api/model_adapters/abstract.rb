@@ -8,23 +8,23 @@ module RapidApi
         @klass = klass
       end
 
-      def find(id, scope=nil)
+      def find(_id, _scope=nil)
         raise NotImplementedError
       end
 
-      def find_all(params=nil, scope=nil)
+      def find_all(_params=nil, _scope=nil)
         raise NotImplementedError
       end
 
-      def create(params, scope=nil)
+      def create(_params, _scope=nil)
         raise NotImplementedError
       end
 
-      def update(id, params, scope=nil)
+      def update(_id, _params, _scope=nil)
         raise NotImplementedError
       end
 
-      def destroy(id, scope=nil)
+      def destroy(_id, _scope=nil)
         raise NotImplementedError
       end
 

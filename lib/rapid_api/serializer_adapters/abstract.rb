@@ -9,11 +9,11 @@ module RapidApi
         @root_key = root_key
       end
 
-      def serialize(member)
+      def serialize(_member)
         raise NotImplementedError
       end
 
-      def serialize_collection(collection)
+      def serialize_collection(_collection)
         raise NotImplementedError
       end
 
