@@ -2,9 +2,7 @@
 
 *NOT PRODUCTION READY*
 
-__A framework for rapid development of Rails APIs__-- *RapidApi* aims to reduce code maintenance and testing costs, while increasing speed of development. Because the ceremony of rendering REST actions is done, you can focus more time on what makes your app unique.
-
-*As a side note*, the primary use case in the development of this gem has been the support of client side MVC apps, specifically Ember apps using the Ember Data ActiveModelAdapter.  Of course, there are many use cases for a JSON api, and the RapidApi should be generic and configurable enough to provide a solution for those.
+__A framework for rapid development of Rails APIs__-- *RapidApi* aims to reduce code maintenance and testing costs, while increasing speed of development. Because the ceremony of rendering REST actions is performed for you, you can focus more time on what makes your app unique.
 
 ## Installation
 Include in your Gemfile:
@@ -120,6 +118,3 @@ Also note that the `decode_jwt_token!` can raise errors that will result in the 
 If you don't want to use ActiveRecord or ActiveModelSerializer, that is OK. You can create your own adapters.
 
 There are two abstract classes that can be used as base classes for your own implementation: `RapidApi::ModelAdapters::Abstract` and `RapidApi::SerializerAdapters::Abstract`. See the implemented adapters and tests for examples on how to implement an adapter.  Post an issue if you get stuck.
-
-### Contribution
-This gem is still in the early stages of development. There are likely to be features that are not supported that should be. If that includes something you would like to see added, post an [issue](https://github.com/briandavidwetzel/rapid_api/issues/new), or a [pull request](https://github.com/briandavidwetzel/rapid_api/compare).
