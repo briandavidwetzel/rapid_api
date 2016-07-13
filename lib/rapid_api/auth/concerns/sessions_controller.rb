@@ -7,7 +7,7 @@ module RapidApi
         include JWTHelpers
 
         included do
-          skip_before_filter :authenticate!
+          skip_before_action :authenticate!
         end
 
         def authenticate

@@ -12,6 +12,7 @@ module TestHelper
   ActiveModelSerializers.config.adapter = :json_api
   Routes = ActionDispatch::Routing::RouteSet.new
   Routes.draw do
+    # TODO: Need to deal with the deprecation of the dynamic segments
     get ':controller(/:action(/:id))'
     get ':controller(/:action)'
   end

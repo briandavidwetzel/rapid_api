@@ -19,7 +19,7 @@ module ActionController
     tests TestScopesController
 
     def test_scope_by
-      get :scoped_bricks, { user_id: 1, org_id: 2 }
+      get :scoped_bricks, params: { user_id: 1, org_id: 2 }
       body = JSON.parse(@controller.response.body)
       assert_equal '1', body['user_id']
       assert_equal '2', body['org_id']

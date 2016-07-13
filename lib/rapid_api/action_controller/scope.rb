@@ -7,7 +7,7 @@ module RapidApi
       attr_accessor :scope
 
       included do
-        before_filter :define_scope
+        before_action :define_scope
       end
 
       def scope
