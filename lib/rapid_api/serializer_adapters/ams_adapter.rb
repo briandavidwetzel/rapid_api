@@ -8,10 +8,9 @@ module RapidApi
       end
 
       def serialize_collection(collection)
-        array_serializer = ActiveModel::ArraySerializer.new collection, {
+        array_serializer = ActiveModel::Serializer::CollectionSerializer.new collection, {
                              each_serializer: klass
                            }
-        array_serializer.root = root_key.pluralize
         array_serializer.to_json
       end
 

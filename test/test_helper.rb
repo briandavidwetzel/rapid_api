@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'pry'
+require 'byebug'
 require 'rails'
 require 'action_controller'
 require 'action_controller/test_case'
@@ -9,6 +9,7 @@ require 'minitest/autorun'
 Dir['./test/support/**/*.rb'].each {|f| require f}
 
 module TestHelper
+  ActiveModelSerializers.config.adapter = :json_api
   Routes = ActionDispatch::Routing::RouteSet.new
   Routes.draw do
     get ':controller(/:action(/:id))'

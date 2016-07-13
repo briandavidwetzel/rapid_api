@@ -15,7 +15,7 @@ module RapidApi
       def test_serialize
         brick = Brick.create color: 'yellow', weight: 10, material: 'gold'
         serialized_brick = @adapter.serialize brick
-        assert_equal "{\"brick\":{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"}}", serialized_brick
+        assert_equal "{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"}", serialized_brick
       end
 
       def test_serialize_collection
@@ -23,7 +23,7 @@ module RapidApi
         brick1 = Brick.create color: 'yellow', weight: 10, material: 'gold'
         brick2 = Brick.create color: 'red',    weight: 1,  material: 'clay'
         serialized_brick_array = @adapter.serialize_collection Brick.all
-        assert_equal "{\"bricks\":[{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"},{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}]}", serialized_brick_array
+        assert_equal "[{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"},{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}]", serialized_brick_array
       end
 
     end
