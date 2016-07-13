@@ -9,7 +9,6 @@ require 'minitest/autorun'
 Dir['./test/support/**/*.rb'].each {|f| require f}
 
 module TestHelper
-  ActiveModelSerializers.config.adapter = :json_api
   Routes = ActionDispatch::Routing::RouteSet.new
   Routes.draw do
     # TODO: Need to deal with the deprecation of the dynamic segments

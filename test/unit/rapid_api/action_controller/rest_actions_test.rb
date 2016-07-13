@@ -30,6 +30,7 @@ module ActionController
       assert_equal Brick, BricksController.model
       BricksController.model = Foo
       assert_equal Foo, BricksController.model
+      BricksController.model = Brick
     end
 
     def test_params_key
