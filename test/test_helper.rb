@@ -3,6 +3,7 @@ require 'byebug'
 require 'rails'
 require 'action_controller'
 require 'action_controller/test_case'
+require 'active_model_serializers'
 require 'rapid_api'
 require 'minitest/autorun'
 
