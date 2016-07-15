@@ -2,10 +2,10 @@ require File.expand_path '../../../../test_helper.rb', __FILE__
 
 module ActionController
 
-  class RestActionsTest < ActionController::TestCase
+  class ResourceActionsTest < ActionController::TestCase
 
     class BricksController < ActionController::Base
-      include RapidApi::ActionController::RestActions
+      include RapidApi::ActionController::ResourceActions
 
       self.model_adapter      = TestModelAdapter
       self.serializer_adapter = TestSerializerAdapter

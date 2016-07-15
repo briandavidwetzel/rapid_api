@@ -6,7 +6,7 @@ class ConfigurationTest < Minitest::Test
   RapidApi.config.model_adapter = DefaultModelAdapter
 
   class BricksController < ActionController::Base
-    include RapidApi::ActionController::RestActions
+    include RapidApi::ActionController::ResourceActions
 
     permit_params :color
   end

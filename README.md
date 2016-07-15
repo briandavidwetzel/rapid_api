@@ -2,7 +2,7 @@
 
 *NOT PRODUCTION READY*
 
-__A framework for rapid development of Rails APIs__-- *RapidApi* aims to reduce code maintenance and testing costs, while increasing speed of development. Because the ceremony of rendering REST actions is performed for you, you can focus more time on what makes your app unique.
+__A framework for rapid development of Rails APIs__-- *RapidApi* aims to reduce code maintenance and testing costs, while increasing speed of development. Because the ceremony of rendering resource actions is performed for you, you can focus more time on what makes your app unique.
 
 ## Installation
 Include in your Gemfile:
@@ -13,7 +13,7 @@ gem 'rapid_api', git: 'git://github.com/briandavidwetzel/rapid_api.git'
 
 ## Documentation
 ### Rapid Actions
-Including `rapid_actions` in your controller will give you conventional RESTful actions: `#index, #show, #create, #update, and #destroy`.
+Including `rapid_actions` in your controller will give you conventional resourceful actions: `#index, #show, #create, #update, and #destroy`.
 ```ruby
 class BricksController < ApplicationController
   rapid_actions

@@ -1,7 +1,7 @@
 module RapidApi
   module ActionController
 
-    module RestActions
+    module ResourceActions
       extend ActiveSupport::Concern
       include PermittedParams
       include FilterableParams
