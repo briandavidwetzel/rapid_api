@@ -1,0 +1,15 @@
+version: '2'
+services:
+  test:
+    build: .
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/myapp
+    volumes_from:
+      - cache
+
+  cache:
+    image: busybox
+    volumes:
+      - /cache

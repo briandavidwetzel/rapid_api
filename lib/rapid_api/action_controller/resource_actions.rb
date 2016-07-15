@@ -1,7 +1,7 @@
 module RapidApi
   module ActionController
 
-    module RestActions
+    module ResourceActions
       extend ActiveSupport::Concern
       include PermittedParams
       include FilterableParams
@@ -14,7 +14,7 @@ module RapidApi
       end
 
       def index
-        query_result = _adapted_model.find_all filterable_params, scope
+        query_result = _adapted_model.find_all filterable_params.to_h, scope
         render json: _adapted_serializer.serialize_collection(query_result.data), status: response_code_for(:ok)
       end
 
@@ -69,7 +69,7 @@ module RapidApi
       end
 
       def _member_params
-        _permitted_params_for(_params_key)
+        _permitted_params_for(_params_key).to_h
       end
 
       def _model
@@ -125,7 +125,7 @@ module RapidApi
         end
 
         def params_key
-          @params_key ||= model.to_s.underscore
+          @params_key ||= model.to_s.underscore.split('::').last
         end
 
         def model_adapter=(adapter)
@@ -149,7 +149,7 @@ module RapidApi
         end
 
         def _reset_params_key
-          @params_key = model.to_s.underscore
+          @params_key = model.to_s.underscore.split('::').last
         end
       end
     end

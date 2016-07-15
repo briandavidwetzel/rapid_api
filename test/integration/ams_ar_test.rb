@@ -32,13 +32,13 @@ class AmsArTest < ActionController::TestCase
     brick1 = @user1.bricks.create color: 'yellow',  weight: 10, material: 'gold'
     brick2 = @user1.bricks.create color: 'red',     weight: 1,  material: 'clay'
     brick3 = @user2.bricks.create color: 'magenta', weight: 0,  material: 'feathers'
-    get :index, { user_id: @user1.id }
-    assert_equal "{\"bricks\":[{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"},{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}]}", response.body
+    get :index, params: { user_id: @user1.id }
+    assert_equal "{\"data\":[{\"id\":\"#{brick1.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"}},{\"id\":\"#{brick2.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}]}", response.body
   end
 
   def test_show
     brick = Brick.create color: 'red',    weight: 1,  material: 'clay'
-    get :show, {id: brick.id}
-    assert_equal "{\"brick\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}", response.body
+    get :show, params: {id: brick.id}
+    assert_equal "{\"data\":{\"id\":\"#{brick.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}}", response.body
   end
 end

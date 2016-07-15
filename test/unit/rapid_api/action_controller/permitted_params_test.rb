@@ -21,7 +21,7 @@ module ActionController
     end
 
     def test_permitted_params_for
-      post :permissive_bricks, {brick: {color: 'red', weight: 1}}
+      post :permissive_bricks, params: {brick: {color: 'red', weight: 1}}
       refute response.body.include?("\"weight\":\"1.0\""), ":attribute should not have been permitted."
       assert response.body.include?("\"color\":\"red\""), ":attribute should have been permitted."
     end

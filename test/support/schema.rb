@@ -1,6 +1,6 @@
 ActiveRecord::Schema.define do
-  connection.drop_table :bricks if connection.table_exists? :bricks
-  connection.drop_table :users  if connection.table_exists? :users
+  connection.drop_table :bricks if connection.data_source_exists? :bricks
+  connection.drop_table :users  if connection.data_source_exists? :users
   create_table :bricks do |t|
     t.string  :color
     t.decimal :weight

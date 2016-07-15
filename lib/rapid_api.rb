@@ -34,3 +34,7 @@ end
 if defined?(ActionController::API)
   ActionController::API.send :include, RapidApi::ActionController::Macros
 end
+
+if defined?(ActiveModelSerializers)
+  ActiveModelSerializers.config.adapter = :json_api
+end

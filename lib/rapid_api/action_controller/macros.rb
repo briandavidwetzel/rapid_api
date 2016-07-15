@@ -5,7 +5,7 @@ module RapidApi
 
       module ClassMethods
         def rapid_actions(options={})
-          include RapidApi::ActionController::RestActions
+          include RapidApi::ActionController::ResourceActions
           self.model              = options[:model]              if options[:model]
           self.serializer         = options[:serializer]         if options[:serializer]
           self.model_adapter      = options[:model_adapter]      if options[:model_adapter]

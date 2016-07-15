@@ -21,7 +21,7 @@ module ActionController
     end
 
     def test_filterable_params
-      post :filterable_bricks, { color: 'blue', material: 'steel' }
+      post :filterable_bricks, params: { color: 'blue', material: 'steel' }
       body = JSON.parse(@controller.response.body)
       expected = { 'color' => 'blue' }
       assert_equal expected, body

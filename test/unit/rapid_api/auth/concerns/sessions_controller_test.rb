@@ -3,6 +3,7 @@ require File.expand_path '../../../../../test_helper.rb', __FILE__
 class SessionsControllerTest < ActionController::TestCase
 
   class TestSessionsController < ActionController::Base
+    include RapidApi::Auth::Concerns::AuthenticatedController
     include RapidApi::Auth::Concerns::SessionsController
 
     authenticates_with :username, :password do |params|
@@ -35,7 +36,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   def test_authenticate
     params = {'username' => 'bob_the_builder', 'password' => 'password'}
-    post :authenticate, params
+    post :authenticate, params: params
     body = JSON.parse(@controller.response.body)
     assert_response :ok
     decoded_token = RapidApi::Auth::Support::JWT.decode(body["token"])
@@ -46,7 +47,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   def test_invalid_credentials
     params = {'username' => 'bob_the_builder', 'password' => 'wrong_password'}
-    post :authenticate, params
+    post :authenticate, params: params
     body = JSON.parse(@controller.response.body)
     assert_response :unauthorized
     assert_equal body["errors"].first, 'Invalid credentials'
