@@ -14,8 +14,8 @@ module RapidApi
 
       private
 
-      def _permitted_params_for(key)
-        params.require(key).permit(*permitted_params)
+      def _permitted_params_for(attributes)
+        attributes.permit(*permitted_params)
       end
 
 

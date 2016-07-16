@@ -19,7 +19,8 @@ module RapidApi
       end
 
       def show
-        query_result = _adapted_model.find params[:id], scope
+        id = _adapted_serializer.deserialize_id(params, _params_key)
+        query_result = _adapted_model.find id, scope
         if query_result.found?
           render json: _adapted_serializer.serialize(query_result.data) , status: response_code_for(:ok)
         else
@@ -28,7 +29,8 @@ module RapidApi
       end
 
       def create
-        query_result = _adapted_model.create _member_params, scope
+        attributes   = _member_params
+        query_result = _adapted_model.create attributes, scope
         if query_result.has_errors?
           not_processable! query_result.errors
         else
@@ -37,7 +39,9 @@ module RapidApi
       end
 
       def update
-        query_result = _adapted_model.update params[:id], _member_params, scope
+        attributes   = _member_params
+        id           = _adapted_serializer.deserialize_id(params, _params_key)
+        query_result = _adapted_model.update id, attributes, scope
         if query_result.found?
           if query_result.has_errors?
             not_processable! query_result.errors
@@ -50,7 +54,8 @@ module RapidApi
       end
 
       def destroy
-        query_result = _adapted_model.destroy params[:id], scope
+        id           = _adapted_serializer.deserialize_id(params, _params_key)
+        query_result = _adapted_model.destroy id, scope
         if query_result.has_errors?
           not_processable! query_result.errors
         else
@@ -69,7 +74,7 @@ module RapidApi
       end
 
       def _member_params
-        _permitted_params_for(_params_key).to_h
+        _permitted_params_for(_adapted_serializer.deserialize_attributes(params, _params_key)).to_h
       end
 
       def _model

@@ -26,6 +26,28 @@ module RapidApi
         assert_equal "{\"data\":[{\"id\":\"#{brick1.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"}},{\"id\":\"#{brick2.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}]}", serialized_brick_array
       end
 
+      def test_deserialize_attributes
+        params = ::ActionController::Parameters.new({
+                   data: {
+                     attributes: { color: 'red', weight: '10.0' },
+                     id: 10,
+                     type: 'bricks'
+                   }
+                 })
+        assert_equal({ color: 'red', weight: '10.0' }.to_json, @adapter.deserialize_attributes(params, '').to_json)
+      end
+
+      def test_deserialize_id
+        params = ::ActionController::Parameters.new({
+                   data: {
+                     attributes: { color: 'red', weight: '10.0' },
+                     id: 10,
+                     type: 'bricks'
+                   }
+                 })
+        assert_equal(10 , @adapter.deserialize_id(params, ''))
+      end
+
     end
   end
 end

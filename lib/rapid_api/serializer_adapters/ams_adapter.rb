@@ -14,6 +14,14 @@ module RapidApi
         ActiveModelSerializers::Adapter.create(collection_serializer).to_json
       end
 
+      def deserialize_attributes(params, root_key)
+        params.require(:data).require(:attributes)
+      end
+
+      def deserialize_id(params, root_key)
+        params.require(:data).require(:id)
+      end
+
     end
   end
 end

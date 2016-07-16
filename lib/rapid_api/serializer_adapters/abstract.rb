@@ -17,6 +17,13 @@ module RapidApi
         raise NotImplementedError
       end
 
+      def deserialize_attributes(params, root_key)
+        raise NotImplementedError
+      end
+
+      def deserialize_id(params, root_key)
+        raise NotImplementedError
+      end
     end
   end
 end

@@ -38,7 +38,7 @@ class AmsArTest < ActionController::TestCase
 
   def test_show
     brick = Brick.create color: 'red',    weight: 1,  material: 'clay'
-    get :show, params: {id: brick.id}
+    get :show, params: { data: { id: brick.id } }
     assert_equal "{\"data\":{\"id\":\"#{brick.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}}", response.body
   end
 end
