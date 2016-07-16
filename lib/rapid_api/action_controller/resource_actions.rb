@@ -44,7 +44,7 @@ module RapidApi
         query_result = _adapted_model.update id, attributes, scope
         if query_result.found?
           if query_result.has_errors?
-            not_processable! query_result.errors
+            not_processable! _adapted_serializer.serialize_errors(query_result)
           else
             render json: _adapted_serializer.serialize(query_result.data), status: response_code_for(:ok)
           end
