@@ -68,6 +68,7 @@ module ActionController
       BricksController.adapted_model.expect :find, query_result, ["1", {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, ['data']
+      BricksController.adapted_serializer.expect :deserialize_id, "1", [ActionController::Parameters, String]
       get :show, params: {id: 1}
       assert_response :ok
       BricksController.adapted_model.verify
@@ -76,6 +77,7 @@ module ActionController
 
     def test_show_not_found
       BricksController.adapted_model = Minitest::Mock.new
+      BricksController.serializer = TestSerializerAdapter
       query_result = RapidApi::ModelAdapters::QueryResult.new()
       BricksController.adapted_model.expect :find, query_result, ["1", {color: 'blue'}]
       get :show, params: {id: 1}
@@ -90,6 +92,7 @@ module ActionController
       BricksController.adapted_model.expect :create, query_result, [params, {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, ['data']
+      BricksController.adapted_serializer.expect :deserialize_attributes, ActionController::Parameters.new(params), [ActionController::Parameters, String]
       post :create, params: {brick: params}
       assert_response :created
       BricksController.adapted_model.verify
@@ -99,6 +102,7 @@ module ActionController
     def test_create_errors
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
+      BricksController.serializer = TestSerializerAdapter
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data', errors: 'dummy error')
       BricksController.adapted_model.expect :create, query_result, [params, {color: 'blue'}]
       post :create, params: {brick: params}
@@ -113,6 +117,8 @@ module ActionController
       BricksController.adapted_model.expect :update, query_result, ["1", params, {color: 'blue'}]
       BricksController.adapted_serializer = Minitest::Mock.new
       BricksController.adapted_serializer.expect :serialize, nil, ['data']
+      BricksController.adapted_serializer.expect :deserialize_attributes, ActionController::Parameters.new(params), [ActionController::Parameters, String]
+      BricksController.adapted_serializer.expect :deserialize_id, "1", [ActionController::Parameters, String]
       post :update, params: {brick: params, id: 1}
       assert_response :ok
       BricksController.adapted_model.verify
@@ -122,6 +128,7 @@ module ActionController
     def test_update_not_found
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
+      BricksController.serializer = TestSerializerAdapter
       query_result = RapidApi::ModelAdapters::QueryResult.new()
       BricksController.adapted_model.expect :update, query_result, ["1", params, {color: 'blue'}]
       post :update, params: {brick: params, id: 1}
@@ -132,6 +139,7 @@ module ActionController
     def test_update_errors
       params = {'color' => 'red', 'weight' => '10', 'material' => 'clay'}
       BricksController.adapted_model = Minitest::Mock.new
+      BricksController.serializer = TestSerializerAdapter
       query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data', errors: 'dummy error')
       BricksController.adapted_model.expect :update, query_result, ["1", params, {color: 'blue'}]
       post :update, params: {brick: params, id: 1}
@@ -141,6 +149,7 @@ module ActionController
 
     def test_destroy
       BricksController.adapted_model = Minitest::Mock.new
+      BricksController.serializer = TestSerializerAdapter
       query_result = RapidApi::ModelAdapters::QueryResult.new()
       BricksController.adapted_model.expect :destroy, query_result, ["1", {color: 'blue'}]
       post :destroy, params: {id: 1}
@@ -150,6 +159,7 @@ module ActionController
 
     def test_destroy_errors
       BricksController.adapted_model = Minitest::Mock.new
+      BricksController.serializer = TestSerializerAdapter
       query_result = RapidApi::ModelAdapters::QueryResult.new(errors: 'dummy error')
       BricksController.adapted_model.expect :destroy, query_result, ["1", {color: 'blue'}]
       post :destroy, params: {id: 1}

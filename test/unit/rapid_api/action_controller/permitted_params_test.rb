@@ -10,7 +10,7 @@ module ActionController
       permit_params :color
 
       def permissive_bricks
-        render json: _permitted_params_for(:brick).to_json, status: :ok
+        render json: _permitted_params_for(params.require(:brick)).to_json, status: :ok
       end
     end
 
