@@ -16,7 +16,7 @@ class ActionControllerErrorsTest < ActionController::TestCase
     def not_processable_action
       brick = Brick.create
       brick.errors.add(:base, 'Sample Error')
-      not_processable!(brick.errors)
+      not_processable!({ errors: brick.errors })
     end
 
     def server_error_action

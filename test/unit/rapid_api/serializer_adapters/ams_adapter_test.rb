@@ -26,6 +26,13 @@ module RapidApi
         assert_equal "{\"data\":[{\"id\":\"#{brick1.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"}},{\"id\":\"#{brick2.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}]}", serialized_brick_array
       end
 
+      def test_serialize_errors
+        brick1 = Brick.create color: 'teal', weight: 10, material: 'gold'
+        brick1.errors.add(:color,'Invalid color.')
+        serialized_errors = @adapter.serialize_errors RapidApi::ModelAdapters::QueryResult.new(errors: brick1.errors)
+        assert_equal "{\"errors\":[{\"source\":{\"pointer\":\"/data/attributes/color\"},\"detail\":\"Invalid color.\"}]}", serialized_errors
+      end
+
       def test_deserialize_attributes
         params = ::ActionController::Parameters.new({
                    data: {

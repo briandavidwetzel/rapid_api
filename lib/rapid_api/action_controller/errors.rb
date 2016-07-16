@@ -59,7 +59,7 @@ module RapidApi
       end
 
       def _not_processable(e)
-        render json: { errors: e.errors }, status: response_code_for(:unprocessable_entity)
+        render json: e.errors, status: response_code_for(:unprocessable_entity)
       end
 
       def _server_error(e)

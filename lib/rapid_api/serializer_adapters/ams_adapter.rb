@@ -14,14 +14,20 @@ module RapidApi
         ActiveModelSerializers::Adapter.create(collection_serializer).to_json
       end
 
+      def serialize_errors(query_result)
+        serializer = ActiveModel::Serializer::ErrorSerializer.new(query_result)
+        ActiveModelSerializers::Adapter.create(serializer).to_json
+      end
+
+      # NOTE: Need to add support for :attributes serialization
       def deserialize_attributes(params, root_key)
         params.require(:data).require(:attributes)
       end
 
+      # NOTE: Need to add support for :attributes serialization
       def deserialize_id(params, root_key)
         params.require(:data).require(:id)
       end
-
     end
   end
 end
