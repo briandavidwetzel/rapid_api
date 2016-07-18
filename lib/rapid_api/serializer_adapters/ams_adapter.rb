@@ -24,9 +24,8 @@ module RapidApi
         params.require(:data).require(:attributes)
       end
 
-      # NOTE: Need to add support for :attributes serialization
       def deserialize_id(params, root_key)
-        params.require(:data).require(:id)
+        params.require(:id)
       end
     end
   end

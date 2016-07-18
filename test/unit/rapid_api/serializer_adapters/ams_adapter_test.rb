@@ -46,11 +46,7 @@ module RapidApi
 
       def test_deserialize_id
         params = ::ActionController::Parameters.new({
-                   data: {
-                     attributes: { color: 'red', weight: '10.0' },
-                     id: 10,
-                     type: 'bricks'
-                   }
+                     id: 10
                  })
         assert_equal(10 , @adapter.deserialize_id(params, ''))
       end
