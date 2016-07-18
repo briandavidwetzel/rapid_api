@@ -7,8 +7,8 @@ module ActionController
     class TestScopesController < ActionController::Base
       include RapidApi::ActionController::Scope
 
-      scope_by :user_id, :org_id do |controller|
-        [controller.params['user_id'], controller.params['org_id']]
+      scope_by :user_id, :org_id do
+        [params['user_id'], params['org_id']]
       end
 
       def scoped_bricks

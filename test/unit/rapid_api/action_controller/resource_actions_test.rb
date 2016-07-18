@@ -13,8 +13,8 @@ module ActionController
       permit_params     :color, :weight, :material
       filterable_params :color
 
-      scope_by :color do |controller|
-        'blue'
+      scope_by :color do
+        ['blue']
       end
     end
 

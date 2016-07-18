@@ -6,8 +6,8 @@ class AmsArTest < ActionController::TestCase
 
     rapid_actions model: Brick, serializer: BrickSerializer
 
-    scope_by :user_id do |controller|
-      controller.params['user_id']
+    scope_by :user_id do
+      params['user_id']
     end
 
     permit_params :color, :weight, :material
@@ -37,7 +37,7 @@ class AmsArTest < ActionController::TestCase
   end
 
   def test_show
-    brick = Brick.create color: 'red',    weight: 1,  material: 'clay'
+    brick = Brick.create color: 'red', weight: 1,  material: 'clay'
     get :show, params: { id: brick.id }
     assert_equal "{\"data\":{\"id\":\"#{brick.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"red\",\"weight\":\"1.0\",\"material\":\"clay\"}}}", response.body
   end

@@ -6,10 +6,6 @@ module RapidApi
 
       attr_accessor :scope
 
-      included do
-        before_action :define_scope
-      end
-
       def scope
         @scope ||= {}
       end
@@ -17,11 +13,9 @@ module RapidApi
       protected
 
       def define_scope
-        return unless self.class.scope_by_proc.present?
-        scope_by = self.class.scope_by_proc.call(self)
-        scope_by_array = [*scope_by]
+        return unless try :_scope_array
         self.class.scope_params.each_with_index do |key, index|
-          scope[key] = scope_by_array[index]
+          scope[key] = _scope_array[index]
         end
       end
 
@@ -34,7 +28,8 @@ module RapidApi
         end
 
         def scope_by(*params, &block)
-          self.scope_by_proc = Proc.new { |p| block.call(p) }
+          define_method :_scope_array, &block
+          before_action(:define_scope)
           [*params].each { |p| self.scope_params << p }
         end
       end
