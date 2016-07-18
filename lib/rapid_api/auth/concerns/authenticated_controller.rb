@@ -4,6 +4,7 @@ module RapidApi
 
       module AuthenticatedController
         extend ActiveSupport::Concern
+        include JWTHelpers
 
         included do
           before_action :authenticate!
@@ -12,37 +13,31 @@ module RapidApi
         end
 
         def authenticate!
-          self.extend JWTHelpers
-          self.extend AuthenticationHelpers
-          self.authenticated = self.class.authenticate_proc.call(self)
+          self.authenticated = _authenticate
           not_authenticated! if authenticated.nil?
         end
 
         protected
 
+        def decode_jwt_token!(token)
+          begin
+            jwt_decode(token)
+          rescue JWT::ExpiredSignature
+            not_authenticated!
+          rescue JWT::VerificationError, JWT::DecodeError
+            not_authenticated!
+          end
+        end
+
         module ClassMethods
           attr_accessor :authenticate_proc
 
           def authenticate(&block)
-            self.authenticate_proc = Proc.new { |request| block.call(request) }
+            define_method :_authenticate, &block
           end
 
           def inherited(child)
             child.authenticate_proc = authenticate_proc
-          end
-
-        end
-
-        module AuthenticationHelpers
-
-          def decode_jwt_token!(token)
-            begin
-              jwt_decode(token)
-            rescue JWT::ExpiredSignature
-              not_authenticated!
-            rescue JWT::VerificationError, JWT::DecodeError
-              not_authenticated!
-            end
           end
 
         end
