@@ -11,9 +11,9 @@ module RapidApi
         end
 
         def authenticate
-          authenticated = self.class.auth_proc.call(permitted_auth_params)
+          authenticated = _authenticate(permitted_auth_params)
           if authenticated.present?
-            render json:   self.class.responds_with_proc.call(authenticated),
+            render json:   _authentication_response_json(authenticated),
                    status: :ok
           else
             render json: { errors: ['Invalid credentials'] }, status: :unauthorized
@@ -34,12 +34,12 @@ module RapidApi
           end
 
           def authenticates_with(*params, &block)
-            self.auth_proc = Proc.new { |params| block.call(params) }
+            define_method :_authenticate, &block
             [*params].each { |p| self.auth_params << p }
           end
 
           def responds_with(&block)
-            self.responds_with_proc = Proc.new { |authenticated| block.call(authenticated) }
+            define_method :_authentication_response_json, &block
           end
         end
       end
