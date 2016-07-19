@@ -6,9 +6,9 @@ module RapidApi
 
       class JWT
 
-        def self.encode(payload={}, ttl=3600)
-          if ttl.present?
-            payload[:exp] = Time.current.to_i + ttl
+        def self.encode(payload={}, ttl_in_sec=nil)
+          if ttl_in_sec.present?
+            payload[:exp] = Time.current.to_i + ttl_in_sec
           end
           encrypt_key = nil; #TODO: Make this configurable
           encrypt_alg = 'none'
