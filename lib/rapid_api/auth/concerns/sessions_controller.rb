@@ -7,11 +7,11 @@ module RapidApi
         include JWTHelpers
 
         included do
-          skip_before_action :authenticate!, only: [:authenticate]
+          skip_before_action :authorize!, only: [:authenticate]
         end
 
         def authenticate
-          authenticated = _establish_session(permitted_auth_params)
+          authenticated = _authenticate(permitted_auth_params)
           if authenticated.present?
             render json:   _authentication_response_json(authenticated),
                    status: :ok
@@ -34,7 +34,7 @@ module RapidApi
           end
 
           def authenticates_with(*params, &block)
-            define_method :_establish_session, &block
+            define_method :_authenticate, &block
             [*params].each { |p| self.auth_params << p }
           end
 

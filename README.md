@@ -99,7 +99,7 @@ end
 class ApplicationController
   rapid_base_controller
 
-  authenticate do |controller|
+  authorize do |controller|
     token = controller.decode_jwt_token!(controller.request.headers.env['Authorization'])
     user_id = token[0].try :[], 'user_id'
     if user_id.present?
@@ -110,7 +110,7 @@ class ApplicationController
   end
 end
 ```
-`rapid_base_controller` can be added to the base class for your api controllers to provide a before_action that checks authentication. Note if your SessionController is derived from the same base class, then you should add `skip_before_action :authenticate!` to your SessionsController.  The `authenticate` macro should be passed a block that returns the authenticated object. *In the example, the 'Authorization' token is parsed to return the current user*. If your authenticate block returns nil, then `:unauthorized` will be rendered.
+`rapid_base_controller` can be added to the base class for your api controllers to provide a before_action that checks authentication. Note if your SessionController is derived from the same base class, then you should add `skip_before_action :authorize!` to your SessionsController.  The `authenticate` macro should be passed a block that returns the authenticated object. *In the example, the 'Authorization' token is parsed to return the current user*. If your authenticate block returns nil, then `:unauthorized` will be rendered.
 
 Also note that the `decode_jwt_token!` can raise errors that will result in the rendering of an `:unauthorized` response.
 

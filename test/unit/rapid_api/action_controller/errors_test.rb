@@ -6,7 +6,7 @@ class ActionControllerErrorsTest < ActionController::TestCase
     include RapidApi::ActionController::Errors
 
     def unauthenticated_action
-      not_authenticated!
+      not_authorized!
     end
 
     def not_found_action

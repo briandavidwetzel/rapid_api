@@ -4,8 +4,8 @@ module RapidApi
     module Errors
       extend ActiveSupport::Concern
 
-      NotAuthenticatedError = Class.new StandardError
-      NotFoundError         = Class.new StandardError
+      NotAuthorizedError = Class.new StandardError
+      NotFoundError      = Class.new StandardError
 
       class NotProcessableError < StandardError
         attr_accessor :errors
@@ -17,14 +17,14 @@ module RapidApi
       end
 
       included do
-        rescue_from StandardError,         with: :_server_error
-        rescue_from NotAuthenticatedError, with: :_not_authenticated
-        rescue_from NotFoundError,         with: :_not_found
-        rescue_from NotProcessableError,   with: :_not_processable
+        rescue_from StandardError,       with: :_server_error
+        rescue_from NotAuthorizedError,  with: :_not_authorized
+        rescue_from NotFoundError,       with: :_not_found
+        rescue_from NotProcessableError, with: :_not_processable
       end
 
-      def not_authenticated!
-        raise NotAuthenticatedError
+      def not_authorized!
+        raise NotAuthorizedError
       end
 
       def not_found!
@@ -50,7 +50,7 @@ module RapidApi
         e.backtrace.map { |m| puts m }
       end
 
-      def _not_authenticated(e)
+      def _not_authorized(e)
         render_error_message 'Not Authenticated', :unauthorized, e
       end
 

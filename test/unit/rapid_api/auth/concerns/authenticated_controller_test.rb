@@ -10,7 +10,7 @@ class AuthenticatedControllerTest < ActionController::TestCase
 
     permit_params :color, :weight, :material
 
-    authenticate do
+    authorize do
       token = decode_jwt_token!(request.headers.env['Authorization'])
       user_id = token[0].try :[], 'user_id'
       if user_id.present?
@@ -34,23 +34,19 @@ class AuthenticatedControllerTest < ActionController::TestCase
     DatabaseCleaner.clean
   end
 
-  def test_authenticated
+  def test_authorized
     @user = User.create
     token = RapidApi::Auth::Support::JWT.encode({ user_id: @user.id })
     @request.env['Authorization'] = token
     get :index
     assert_response :ok
-    assert_equal @controller.authenticated.id, @user.id
+    assert_equal @controller.authorized.id, @user.id
   end
 
-  def test_not_authenticated_without_user
+  def test_not_authorized_without_user
     User.delete_all
     get :index
     assert_response :unauthorized
-  end
-
-  def test_child_controller
-    assert_equal TestAuthenticatedController.authenticate_proc, TestChildAuthenticatedController.authenticate_proc
   end
 
 end

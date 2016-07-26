@@ -7,14 +7,14 @@ module RapidApi
         include JWTHelpers
 
         included do
-          before_action :authenticate!
+          before_action :authorize!
 
-          attr_accessor :authenticated
+          attr_accessor :authorized
         end
 
-        def authenticate!
-          self.authenticated = _authenticate
-          not_authenticated! if authenticated.nil?
+        def authorize!
+          self.authorized = _authorize
+          not_authorized! if authorized.nil?
         end
 
         protected
@@ -23,21 +23,16 @@ module RapidApi
           begin
             jwt_decode(token)
           rescue JWT::ExpiredSignature
-            not_authenticated!
+            not_authorized!
           rescue JWT::VerificationError, JWT::DecodeError
-            not_authenticated!
+            not_authorized!
           end
         end
 
         module ClassMethods
-          attr_accessor :authenticate_proc
 
-          def authenticate(&block)
-            define_method :_authenticate, &block
-          end
-
-          def inherited(child)
-            child.authenticate_proc = authenticate_proc
+          def authorize(&block)
+            define_method :_authorize, &block
           end
 
         end
