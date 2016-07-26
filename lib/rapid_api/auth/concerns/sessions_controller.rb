@@ -11,7 +11,7 @@ module RapidApi
         end
 
         def authenticate
-          authenticated = _authenticate(permitted_auth_params)
+          authenticated = _establish_session(permitted_auth_params)
           if authenticated.present?
             render json:   _authentication_response_json(authenticated),
                    status: :ok
@@ -34,7 +34,7 @@ module RapidApi
           end
 
           def authenticates_with(*params, &block)
-            define_method :_authenticate, &block
+            define_method :_establish_session, &block
             [*params].each { |p| self.auth_params << p }
           end
 
