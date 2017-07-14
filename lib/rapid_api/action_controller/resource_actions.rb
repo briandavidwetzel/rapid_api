@@ -56,10 +56,14 @@ module RapidApi
       def destroy
         id           = _adapted_serializer.deserialize_id(params, _params_key)
         query_result = _adapted_model.destroy id, scope
-        if query_result.has_errors?
-          not_processable! query_result.errors
+        if query_result.found?
+          if query_result.has_errors?
+            not_processable! query_result.errors
+          else
+            head :no_content
+          end
         else
-          head :no_content
+          not_found!
         end
       end
 
@@ -115,10 +119,11 @@ module RapidApi
         end
 
         def serializer
-          #TODO: BDW - This convention is too dependent on AMS. This should be
-          # decoupled in some way.
+          module_name = self.name.to_s.deconstantize
+          serializer_name = "#{model_class_name}Serializer"
+          serializer_name = "#{module_name}::#{serializer_name}" unless module_name.empty?
           @serializer ||=  begin
-                             "#{model_class_name}Serializer".constantize
+                             serializer_name.constantize
                            rescue NameError
                            end
         end
