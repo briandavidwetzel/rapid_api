@@ -5,6 +5,7 @@ require 'rapid_api/serializer_adapters'
 require 'rapid_api/action_controller'
 require 'rapid_api/auth'
 require 'rapid_api/configuration'
+require 'rapid_api/services'
 
 module RapidApi
 
