@@ -30,7 +30,7 @@ class ActionControllerErrorsTest < ActionController::TestCase
   def test_unauthenticated_error
     get :unauthenticated_action
     assert_response :unauthorized
-    assert_equal ['Not Authenticated'], JSON.parse(@controller.response.body)['errors']
+    assert_equal ['Not Authorized'], JSON.parse(@controller.response.body)['errors']
   end
 
   def test_server_error

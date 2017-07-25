@@ -67,6 +67,16 @@ module RapidApi
         end
       end
 
+      def find_member
+        id = _adapted_serializer.deserialize_id(params, _params_key)
+        query_result = _adapted_model.find id, scope
+        @member = query_result
+      end
+
+      def render_member_ok(member)
+        render json: _adapted_serializer.serialize(member) , status: response_code_for(:ok)
+      end
+
       private
 
       def _adapted_model

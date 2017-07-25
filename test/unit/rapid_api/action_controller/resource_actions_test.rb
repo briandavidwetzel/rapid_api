@@ -150,7 +150,7 @@ module ActionController
     def test_destroy
       BricksController.adapted_model = Minitest::Mock.new
       BricksController.serializer = TestSerializerAdapter
-      query_result = RapidApi::ModelAdapters::QueryResult.new()
+      query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data')
       BricksController.adapted_model.expect :destroy, query_result, ["1", {color: 'blue'}]
       post :destroy, params: {id: 1}
       assert_response :no_content
@@ -160,7 +160,7 @@ module ActionController
     def test_destroy_errors
       BricksController.adapted_model = Minitest::Mock.new
       BricksController.serializer = TestSerializerAdapter
-      query_result = RapidApi::ModelAdapters::QueryResult.new(errors: 'dummy error')
+      query_result = RapidApi::ModelAdapters::QueryResult.new(data: 'data', errors: 'dummy error')
       BricksController.adapted_model.expect :destroy, query_result, ["1", {color: 'blue'}]
       post :destroy, params: {id: 1}
       assert_response :unprocessable_entity
