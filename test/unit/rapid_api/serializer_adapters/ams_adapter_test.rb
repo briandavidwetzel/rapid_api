@@ -13,9 +13,9 @@ module RapidApi
       end
 
       def test_serialize
-        brick = Brick.create color: 'yellow', weight: 10, material: 'gold'
+        brick = Brick.create color: 'yellow', weight: 10, material: 'paper'
         serialized_brick = @adapter.serialize brick
-        assert_equal "{\"data\":{\"id\":\"#{brick.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"gold\"}}}", serialized_brick
+        assert_equal "{\"data\":{\"id\":\"#{brick.id}\",\"type\":\"bricks\",\"attributes\":{\"color\":\"yellow\",\"weight\":\"10.0\",\"material\":\"paper\"}}}", serialized_brick
       end
 
       def test_serialize_collection
