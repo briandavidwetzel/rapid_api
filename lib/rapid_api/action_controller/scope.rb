@@ -10,15 +10,18 @@ module RapidApi
         @scope ||= {}
       end
 
-      protected
-
       def define_scope
-        return unless try :_scope_array
+        tmp_scope_array = [*_scope_array]
         self.class.scope_params.each_with_index do |key, index|
-          scope[key] = _scope_array[index]
+          scope[key] = tmp_scope_array[index]
         end
       end
 
+      protected
+
+      def _scope_array
+        []
+      end
 
       module ClassMethods
         attr_accessor :scope_by_proc, :scope_params

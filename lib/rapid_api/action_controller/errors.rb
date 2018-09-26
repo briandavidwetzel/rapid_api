@@ -51,7 +51,7 @@ module RapidApi
       end
 
       def _not_authorized(e)
-        render_error_message 'Not Authenticated', :unauthorized, e
+        render_error_message 'Not Authorized', :unauthorized, e
       end
 
       def _not_found(e)
