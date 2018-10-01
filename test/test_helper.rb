@@ -6,7 +6,7 @@ require 'action_controller/test_case'
 require 'active_model_serializers'
 require 'rapid_api'
 require 'minitest/autorun'
-
+require './test/support/models.rb'
 Dir['./test/support/**/*.rb'].each {|f| require f}
 
 module TestHelper
