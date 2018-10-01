@@ -39,9 +39,12 @@ module RapidApi
       def add_error(key, message)
         raise "#{key}: #{message}" if bang_mode
 
-        error_key = response.errors[key]
-        error_key ||= []
-        error_key << message
+        if response.errors.key? key
+          response.errors[key] << message
+        else
+          response.errors[key] = []
+          response.errors[key] << message
+        end
       end
 
       def return_value(value)
